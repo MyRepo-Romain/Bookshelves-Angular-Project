@@ -1,0 +1,36 @@
+<form>
+    <mat-card>
+        <mat-card-title *ngIf="newEntity">Enregistrer un nouveau journal</mat-card-title>
+        <mat-card-title *ngIf="!newEntity">Modifier le journal {{ newspaperRequest.title }}</mat-card-title>
+            <mat-card-content fxLayout="column">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <mat-form-field >
+                            <input required matInput type="text" placeholder="Titre" id="title" name="title" [formControl]="cfv.title.ac" [(ngModel)]="newspaperRequest.title">
+                            <mat-error class="mat-error" *ngIf="!cfv.title.ac.valid">
+                                {{ cfv.title.ac.getError('msg') }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <mat-form-field>
+                            <mat-label>Description (150 max)</mat-label>
+                            <textarea required matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" id="description" name="description" [formControl]="cfv.description.ac" [(ngModel)]="newspaperRequest.description" maxlength="160"></textarea>
+                            <mat-error class="mat-error" *ngIf="!cfv.description.ac.valid">
+                                {{ cfv.description.ac.getError('msg') }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <date-picker [cfv]="cfv" [dateSelected]="newspaperRequest.date" (dateSelectedEvent)="dateSelectedEventHandler($event)" [full-width]="true"></date-picker>
+                    </div>
+                </div>
+                <app-file-downloader class="text-center" [cfv]="cfv" (fileUrlEvent)="fileUrlEventhandler($event)"></app-file-downloader>
+            </mat-card-content>
+    </mat-card>
+    <mat-dialog-actions>
+        <a mat-flat-button color="primary" [ngClass]="{'connect': !isDisabled}" [disabled]="isDisabled" (click)="validate()">Enregistrer</a>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,56 @@
+<form>
+    <mat-card>
+        <mat-card-title *ngIf="newEntity">Enregistrer un nouveau livre</mat-card-title>
+        <mat-card-title *ngIf="!newEntity">Modifier le livre {{ bookRequest.title }}</mat-card-title>
+            <mat-card-content fxLayout="column">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <mat-form-field >
+                            <input required matInput type="text" placeholder="Titre" id="title" name="title" [formControl]="cfv.title.ac" [(ngModel)]="bookRequest.title">
+                            <mat-error class="mat-error" *ngIf="!cfv.title.ac.valid">
+                                {{ cfv.title.ac.getError('msg') }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <mat-form-field>
+                            <input required matInput type="text" placeholder="Auteur" id="author" name="author" [formControl]="cfv.author.ac" [(ngModel)]="bookRequest.author">
+                            <mat-error class="mat-error" *ngIf="!cfv.author.ac.valid">
+                                {{ cfv.author.ac.getError('msg') }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <mat-form-field>
+                            <input required matInput type="text" placeholder="Genre" id="genre" name="genre" [formControl]="cfv.genre.ac" [(ngModel)]="bookRequest.genre">
+                            <mat-error class="mat-error" *ngIf="!cfv.genre.ac.valid">
+                                {{ cfv.genre.ac.getError('msg') }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <mat-form-field>
+                            <input required matInput type="text" placeholder="Nombre de page" id="page" name="page" [formControl]="cfv.page.ac" [(ngModel)]="bookRequest.page">
+                            <mat-error class="mat-error" *ngIf="!cfv.page.ac.valid">
+                                {{ cfv.page.ac.getError('msg') }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <mat-form-field>
+                            <mat-label>Description (150 max)</mat-label>
+                            <textarea required matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" id="description" name="description" [formControl]="cfv.description.ac" [(ngModel)]="bookRequest.description" maxlength="160"></textarea>
+                            <mat-error class="mat-error" *ngIf="!cfv.description.ac.valid">
+                                {{ cfv.description.ac.getError('msg') }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <app-file-downloader class="text-center" [cfv]="cfv" (fileUrlEvent)="fileUrlEventhandler($event)"></app-file-downloader>
+            </mat-card-content>
+    </mat-card>
+    <mat-dialog-actions>
+        <a mat-flat-button color="primary" [ngClass]="{'connect': !isDisabled}" [disabled]="isDisabled" (click)="validate()">Enregistrer</a>
+    </mat-dialog-actions>
+</form>
+

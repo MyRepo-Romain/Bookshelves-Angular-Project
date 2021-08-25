@@ -1,0 +1,95 @@
+@import "../../../global-style.scss";
+
+table {
+    width: 100%;
+  }
+  
+  tr.detail-row {
+    height: 0;
+  }
+  
+  tr.element-row:not(.expanded-row):hover {
+    background: whitesmoke;
+  }
+  
+  tr.element-row:not(.expanded-row):active {
+    background: #efefef;
+  }
+  
+  .element-row td {
+    border-bottom-width: 0;
+  }
+  
+  .element-detail-panel {
+    overflow: hidden;
+    display: flex;
+  }
+
+  .element-detail {
+    height: 200px;
+    margin: auto;
+    width: 50%;
+  }
+
+  .element-detail-panel img {
+    height: 300px; 
+    width: 200px;
+    margin: 10px;
+  }
+  
+  .element-diagram {
+    min-width: 80px;
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 104px;
+  }
+  
+  .element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+  }
+  
+  .element-description {
+    padding: 16px;
+    font-size: 18px;
+  }
+  
+  .element-description-attribution {
+    opacity: 0.5;
+  }
+
+  .add-button {
+    position: fixed !important;
+    right: 5% !important;
+    bottom: 5% !important;
+    height: 60px !important;
+    width: 60px !important;
+    z-index: 99999;
+  }
+
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .material-icons {
+    color: #fff;
+  }
+
+  .color {
+
+    ::ng-deep.mat-form-field-underline, ::ng-deep.mat-form-field-ripple {
+      /*change color of underline*/
+      background-color: #fff !important;
+    }
+  
+    ::ng-deep .mat-form-field-label {
+      /*change color of label*/
+      font-size: 16px !important;
+      color: #fff !important;
+    }
+  
+  }

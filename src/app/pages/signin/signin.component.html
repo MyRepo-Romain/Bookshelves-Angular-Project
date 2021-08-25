@@ -1,0 +1,55 @@
+<div *ngIf="isNewAccount == false" class="container-fluid background-signin test">
+    <div class="justify-content-center login-card">
+        <mat-card class="mat-elevation-z4">
+            <div class="signin-content">
+                <mat-card-title>Authentification</mat-card-title>
+                <mat-card-content fxLayout="column">
+                    <mat-form-field>
+                        <input matInput placeholder="Email" type="email" [formControl]="cfv.email.ac" [(ngModel)]="inputUser.email" name="email" (keyup.enter)="validate()">
+                        <mat-error class="mat-error" *ngIf="!cfv.email.ac.valid">
+                            {{ cfv.email.ac.getError('msg') }}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Mot de passe" type="password" [formControl]="cfv.password.ac" [(ngModel)]="inputUser.password" name="password" (keyup.enter)="validate()">
+                        <mat-error class="mat-error" *ngIf="!cfv.password.ac.valid">
+                            {{ cfv.password.ac.getError('msg') }}
+                        </mat-error>
+                    </mat-form-field>
+                </mat-card-content>
+                <mat-card-actions class="d-flex justify-content-around">
+                    <a mat-flat-button color="primary" class="connect" (click)="validate()">Se connecter</a>
+                    <a mat-flat-button color="primary" class="connect" (click)="isNewAccountFunction()">Pas de compte ?</a> 
+                </mat-card-actions>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+<div *ngIf="isNewAccount == true" class="container-fluid background-signin">
+    <div class="justify-content-center login-card">
+        <mat-card class="mat-elevation-z4">
+            <div class="signin-content">
+                <mat-card-title>Créer un compte</mat-card-title>
+                <mat-card-content fxLayout="column">
+                    <mat-form-field>
+                        <input matInput placeholder="Email" type="email" [formControl]="cfv.email.ac" [(ngModel)]="inputUser.email" name="email" (keyup.enter)="validate()">
+                        <mat-error class="mat-error" *ngIf="!cfv.email.ac.valid">
+                            {{ cfv.email.ac.getError('msg') }}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Mot de passe" type="password" [formControl]="cfv.password.ac" [(ngModel)]="inputUser.password" name="password" (keyup.enter)="validate()">
+                        <mat-error class="mat-error" *ngIf="!cfv.password.ac.valid">
+                            {{ cfv.password.ac.getError('msg') }}
+                        </mat-error>
+                    </mat-form-field>
+                </mat-card-content>
+                <mat-card-actions class="d-flex justify-content-around">
+                    <a mat-flat-button color="primary" class="connect" (click)="validate()">Créer mon compte</a>
+                    <a mat-flat-button color="primary" class="connect" (click)="isNewAccountFunction()">Retour</a>
+                </mat-card-actions>
+            </div>
+        </mat-card>
+    </div>
+</div>

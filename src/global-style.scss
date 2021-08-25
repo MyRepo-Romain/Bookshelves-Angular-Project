@@ -1,0 +1,207 @@
+@import "global-variables";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~material-design-icons/iconfont/material-icons.css";
+
+@mixin md-icon-size($size: 24px) {
+  font-size: $size;
+  height: $size;
+  width: $size;
+  line-height: $size;
+}
+
+@media screen and (min-width: 0px) and (max-width: $smartphone-breakpoint) {
+  mat-sidenav-content {
+    height: calc(100vh - 56px) !important;
+  }
+
+  .hidden-on-smartphone {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: $smartphone-breakpoint + 1) {
+  .hidden-on-desktop {
+    display: none !important;
+  }
+}
+
+html {
+  color: #0b0b0b !important;
+}
+
+.connect {
+  .mat-button-wrapper {
+    color: $gold !important;
+  }
+}
+
+.mat-sidenav-content {
+  height: calc(100vh - 64px) !important;
+}
+
+.main-container {
+  padding: 16px;
+}
+
+// Desktop case
+@media screen and (min-width: 600px) {
+  .main-container {
+    margin: auto;
+    max-width: $main-container-max-width;
+  }
+}
+
+h1 {
+  color: #fff;
+  font-size: 38px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+}
+
+// Material card
+mat-card {
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0px;
+  }
+}
+
+// Menu
+.mat-drawer-inner-container {
+  max-width: $menu-width;
+  width: $menu-width !important;
+  min-width: $menu-width;
+}
+
+// Material table
+table {
+  width: 100%;
+  max-height: 90%;
+  overflow: auto;
+  border-collapse: inherit !important;
+}
+
+.filter-table {
+  font-size: 16px;
+  width: 100%;
+}
+
+.subpanel-row {
+  background-color: $background-gray;
+  height: 0px !important;
+
+  & > td {
+    border-bottom-width: 0px !important;
+    padding: 0px !important;
+  }
+}
+
+.row-to-expand {
+  cursor: pointer;
+
+  &:hover {
+    background-color: $table-row-hover-color;
+  }
+
+  &:active {
+    background-color: $table-row-active-color;
+  }
+
+  &:focus {
+    background-color: $table-row-focus-color;
+  }
+}
+
+td {
+  & > .collapse-panel {
+    overflow: hidden;
+    display: block;
+
+    & > .body-collapse {
+      padding: 12px;
+    }
+  }
+
+  &.expanded {
+    border-bottom-width: 1px !important;
+  }
+}
+
+.mat-chip {
+  min-width: 32px;
+}
+
+// Add-button
+.add-button {
+  position: fixed !important;
+  right: 5% !important;
+  bottom: 5% !important;
+  height: 60px !important;
+  width: 60px !important;
+  z-index: 99999;
+  background-color: $primary-color !important;
+
+  & > span > mat-icon {
+    @include md-icon-size(28px);
+  }
+}
+
+.mat-dialog-actions {
+  justify-content: flex-end;
+}
+
+.full-width {
+  width: 100%;
+}
+
+// RoleCard
+
+.role-card-style {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: $primary-color-opacity-04;
+  width: 100%;
+  height: 100%;
+  z-index: 90000;
+  border-radius: 4px;
+  cursor: not-allowed;
+}
+
+.no-padding-dialog-container .mat-dialog-container {
+  padding: 0;
+  max-height: 100%;
+  min-height: 100%;
+  height: 100%;
+
+  mat-dialog-content {
+    max-height: 100%;
+    min-height: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.mat-select-disabled .mat-select-value {
+  color: $primary-color-opacity-08 !important;
+  font-weight: 500;
+  cursor: not-allowed;
+}
+
+.mat-input-element:read-only {
+  color: $primary-color-opacity-08 !important;
+  font-weight: 500;
+  cursor: not-allowed;
+}
+
+.toogle-label {
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+mat-card-subtitle {
+  font-size: 20px !important;
+}

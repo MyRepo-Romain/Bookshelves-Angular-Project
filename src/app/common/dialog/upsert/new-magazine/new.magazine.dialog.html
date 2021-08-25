@@ -1,0 +1,48 @@
+<form>
+    <mat-card>
+        <mat-card-title *ngIf="newEntity">Enregistrer un nouveau magazine</mat-card-title>
+        <mat-card-title *ngIf="!newEntity">Modifier le magazine {{ magazineRequest.title }}</mat-card-title>
+            <mat-card-content fxLayout="column">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <mat-form-field >
+                            <input required matInput type="text" placeholder="Titre" id="title" name="title" [formControl]="cfv.title.ac" [(ngModel)]="magazineRequest.title">
+                            <mat-error class="mat-error" *ngIf="!cfv.title.ac.valid">
+                                {{ cfv.title.ac.getError('msg') }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <mat-form-field>
+                            <input required matInput type="text" placeholder="Theme" id="theme" name="theme" [formControl]="cfv.theme.ac" [(ngModel)]="magazineRequest.theme">
+                            <mat-error class="mat-error" *ngIf="!cfv.theme.ac.valid">
+                                {{ cfv.theme.ac.getError('msg') }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <mat-form-field>
+                            <input required matInput type="text" placeholder="Nombre de page" id="page" name="page" [formControl]="cfv.page.ac" [(ngModel)]="magazineRequest.page">
+                            <mat-error class="mat-error" *ngIf="!cfv.page.ac.valid">
+                                {{ cfv.page.ac.getError('msg') }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <mat-form-field>
+                            <mat-label>Description (150 max)</mat-label>
+                            <textarea required matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" id="description" name="description" [formControl]="cfv.description.ac" [(ngModel)]="magazineRequest.description" maxlength="160"></textarea>
+                            <mat-error class="mat-error" *ngIf="!cfv.description.ac.valid">
+                                {{ cfv.description.ac.getError('msg') }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <app-file-downloader class="text-center" [cfv]="cfv" (fileUrlEvent)="fileUrlEventhandler($event)"></app-file-downloader>
+            </mat-card-content>
+    </mat-card>
+    <mat-dialog-actions>
+        <a mat-flat-button color="primary" [ngClass]="{'connect': !isDisabled}" [disabled]="isDisabled" (click)="validate()">Enregistrer</a>
+    </mat-dialog-actions>
+</form>
+

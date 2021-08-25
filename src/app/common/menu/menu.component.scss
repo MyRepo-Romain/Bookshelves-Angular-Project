@@ -1,0 +1,64 @@
+@import "../../../global-style.scss";
+
+.mat-list-base .mat-subheader {
+  font-size: 24px;
+}
+
+.mat-list-base {
+  & > a {
+    width: 234px;
+    margin: 8px;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: $menu-row-hover !important;
+    }
+
+    &.active {
+      background-color: $menu-row-active !important;
+      color: $menu-color-active !important;
+
+      & > div > .mat-icon {
+        color: $gold !important;
+      }
+    }
+  }
+
+  mat-icon {
+    @include md-icon-size(18px);
+
+    margin-right: 8px;
+  }
+}
+
+mat-expansion-panel {
+  width: 234px;
+  margin: 8px;
+  border-radius: 4px;
+  box-shadow: none !important;
+
+  &:hover {
+    background-color: $menu-row-hover !important;
+  }
+
+  &.active {
+    background-color: $menu-row-active !important;
+    color: $menu-color-active !important;
+  }
+
+  & > div > .mat-icon {
+    color: $gold !important;
+  }
+}
+
+.mat-expansion-panel-body {
+  padding: 0, 0, 0, 8px;
+}
+
+.sub-nav-auto-width {
+  width: 100% !important;
+}
+
+.p-18 {
+  padding: 18px;
+}

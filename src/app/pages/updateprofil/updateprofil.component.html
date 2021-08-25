@@ -1,0 +1,49 @@
+<div *ngIf="isLoaded | async" class="container-fluid">
+    <div class="d-flex flex-row justify-content-around">
+        <mat-card class="mat-elevation-z4">
+            <div class="m-25">
+                <mat-card-title>Générale</mat-card-title>
+                <mat-card-content fxLayout="column">
+                    <mat-form-field>
+                        <input matInput placeholder="Prénom" type="text" [formControl]="cfv.displayName.ac" [(ngModel)]="userUpdateRequest.displayName" name="displayName" (keyup.enter)="validateUserData()">
+                        <mat-error class="mat-error" *ngIf="!cfv.displayName.ac.valid">
+                            {{ cfv.displayName.ac.getError('msg') }}
+                        </mat-error>
+                    </mat-form-field>
+                    <h6 class="mt-15">Photo de profil</h6>
+                    <app-file-downloader [cfv]="cfv" (fileUrlEvent)="fileUrlEventhandler($event)"></app-file-downloader>
+                </mat-card-content>
+                <p class="text-danger">{{ errorMessage }}</p>
+                <mat-card-actions class="d-flex justify-content-end">
+                    <a mat-flat-button color="primary" [ngClass]="{'connect': !isDisabled}" [disabled]="isDisabled" (click)="validateUserProfil()">Modifer le profil</a>
+                </mat-card-actions>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="mt-55">
+                <mat-card-title>Connexion</mat-card-title>
+                <mat-card-content fxLayout="column">
+                    <mat-form-field>
+                        <input matInput placeholder="Email" type="email" [formControl]="cfv.email.ac" [(ngModel)]="loginRequest.email" name="email" (keyup.enter)="validate()">
+                        <mat-error class="mat-error" *ngIf="!cfv.email.ac.valid">
+                            {{ cfv.email.ac.getError('msg') }}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Password" type="text" [formControl]="cfv.password.ac" [(ngModel)]="loginRequest.password" name="password" (keyup.enter)="validate()">
+                        <mat-error class="mat-error" *ngIf="!cfv.password.ac.valid">
+                            {{ cfv.password.ac.getError('msg') }}
+                        </mat-error>
+                    </mat-form-field>
+                </mat-card-content>
+                <mat-card-actions class="d-flex justify-content-end">
+                    <a mat-flat-button color="primary" class="connect" (click)="valideUserConnexion()">Modifer les identifiants de connexion</a>
+                </mat-card-actions>
+            </div>
+            <mat-card-actions class="d-flex justify-content-center mt-55">
+                <a mat-flat-button color="primary" class="connect"  routerLink="/profil">Annuler</a>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

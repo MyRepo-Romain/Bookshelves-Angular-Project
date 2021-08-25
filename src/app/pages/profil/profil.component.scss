@@ -1,0 +1,30 @@
+.container{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.connect {
+  text-decoration: none;
+}
+
+.mat-card-title {
+  margin-bottom: 18px;
+}
+
+img {
+  max-height: 200px;
+}
+
+mat-card-content {
+  width: 80%;
+  margin: 50px auto;
+}
+
+mat-card-title {
+  font-size: 32px;
+}
+
+mat-card {
+  background-color: #f4f4f4;
+}

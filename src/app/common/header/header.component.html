@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" *ngIf="isLoggedIn | async as isLoginAsync" class="mat-elevation-z6">
+    <button class="hidden-on-desktop" mat-icon-button (click)="toogleMenu()">
+        <mat-icon aria-label="label">menu</mat-icon>
+    </button>
+
+    <a class="mat-button hidden-on-smartphone" mat-button="" (click)="goToHome()" tabindex="0">
+        <span class="mat-button-wrapper">
+            <img class="angular-logo" height="40">
+        </span>
+        <div class="mat-button-ripple mat-ripple" matripple=""></div>
+        <div class="mat-button-focus-overlay"></div>
+    </a>
+    <span class="fill-remaining-space"></span>
+    <span class="material-icons">person_outline</span>
+    <button mat-button class="name" *ngIf="isLoginAsync && user != undefined && user.displayName == null" [matMenuTriggerFor]="menuProfile"> {{ user.email }}</button>
+    <button mat-button class="name" *ngIf="isLoginAsync && user != undefined && user.displayName != null" [matMenuTriggerFor]="menuProfile"> {{ user.displayName }}</button>
+</mat-toolbar>
+
+<mat-menu #menuProfile="matMenu">
+    <div class="menu-profile" *ngIf="user != undefined">
+        <mat-nav-list>
+            <a mat-list-item routerLink="/profil" routerLinkActive="active">
+            Profil
+            </a>
+        </mat-nav-list>
+        <mat-divider></mat-divider>
+        <button (click)="signOut()" class="logout text-center" mat-menu-item>Se déconnecter</button>
+    </div>
+</mat-menu>

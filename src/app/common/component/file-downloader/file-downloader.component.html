@@ -1,0 +1,7 @@
+<div>
+    <input type="file" name="image" [formControl]="fileUrlCtrl" (change)="dectectFiles($event)" accept=".png, .jpg, .jpeg">
+    <p>{{ progress }}</p>
+    <mat-error class="mat-error" *ngIf="!cfv.photo.ac.valid">
+        {{ cfv.photo.ac.getError('msg') }}
+    </mat-error>
+</div>

@@ -1,0 +1,68 @@
+@import "global-variables.scss";
+
+.mat-list-base {
+  & > a {
+    display: flex;
+    justify-content: center;
+    width: 125px;
+    margin: 8px;
+    border-radius: 4px;
+    
+    &:hover {
+      background-color: $menu-row-hover !important;
+    }
+
+    &.active {
+      background-color: $menu-row-active !important;
+      color: $menu-color-active !important;
+    }
+  }
+}
+
+.mat-list-item-content {
+  justify-content: center !important
+}
+
+.angular-logo {
+  margin: 0;
+  vertical-align: middle;
+  background-color: transparent;
+  padding: 5px;
+}
+
+.logo-header {
+  margin-left: 24px;
+
+  & > h1 {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    margin-left: 24px;
+  }
+}
+
+.name {
+  font-size: 18px;
+  color: $menu-color-active !important;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.menu-profile {
+  padding: 8px;
+  text-align: center;
+
+  & > p.info {
+    font-size: 12px;
+  }
+}
+
+.profession-asked-count {
+  cursor: pointer;
+}
+
+.logout {
+  margin-top: 8px;
+}

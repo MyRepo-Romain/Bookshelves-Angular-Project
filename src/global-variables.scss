@@ -1,0 +1,29 @@
+// Size
+$smartphone-breakpoint: 599px;
+$main-container-max-width: 1080px;
+$menu-width: 250px;
+
+// Color
+
+$primary-color: #a76945;
+$primary-color-opacity-01: RGBA(167, 105, 69, 0.1);
+$primary-color-opacity-02: RGBA(167, 105, 69, 0.2);
+$primary-color-opacity-03: RGBA(167, 105, 69, 0.3);
+$primary-color-opacity-04: RGBA(167, 105, 69, 0.4);
+$primary-color-opacity-08: RGBA(167, 105, 69, 0.8);
+$primary-color-rgba: RGBA(167, 105, 69, 1);
+
+$white: #ffffff;
+$gold: #ffd700;
+$background-gray: #f7f8f9;
+$background-color-signin-card: RGBA(255, 255, 255, 0.96);
+
+$table-row-hover-color: $primary-color-opacity-01;
+$table-row-active-color: $primary-color-opacity-01;
+$table-row-focus-color: $primary-color-opacity-01;
+
+$menu-color-active: $gold;
+$menu-row-active: $primary-color;
+$menu-row-hover: $primary-color-opacity-03;
+
+$primary-red: #ff2c24;
