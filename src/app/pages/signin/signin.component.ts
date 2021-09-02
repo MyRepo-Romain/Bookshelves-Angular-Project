@@ -8,6 +8,8 @@ import { LoginRequest } from 'app/models/request/loginRequest';
 import * as EmailValidator from 'email-validator';
 import { AngularSession } from 'app/angular.session';
 import { UserResponse } from 'app/models/response/userResponse';
+import { SendEmailtDialogComponent } from 'app/common/dialog/send-email/send.email.dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-signin',
@@ -22,7 +24,8 @@ export class SigninComponent implements OnInit {
   public isNewAccount: boolean;
   public errorMessage: string;
 
-  constructor(private session: AngularSession, public fb: FormBuilder, private firestoreService: FirestoreService, private router: Router) {
+  constructor(private session: AngularSession, public fb: FormBuilder, private firestoreService: FirestoreService, private router: Router, public dialog: MatDialog) {
+    this.session.clear();
     this.isNewAccount = false;
 
     this.cfv = new CustomFormValid(fb, ['name', 'email', 'password']);
@@ -71,8 +74,19 @@ export class SigninComponent implements OnInit {
     let request = newAccount ? this.firestoreService.signInUser(this.inputUser) : this.firestoreService.createNewUser(this.inputUser);
     request.then(
       response => {
-        this.session.setLogin();
-        this.router.navigate(['home']);
+        console.log(response)
+        if(response.user.emailVerified == false) {
+          this.firestoreService.verifyEmail().then(() => {
+            this.dialog.open(SendEmailtDialogComponent, {data: {
+              userEmail: this.inputUser.email,
+              forgotPassword: false
+            }});
+          });
+          this.isNewAccount = false;
+        } else if(response.user.emailVerified == true) {
+          this.session.setLogin();
+          this.router.navigate(['home']);
+        }
       },
       (error: any) => {
         if(error.code === "auth/email-already-in-use") {
@@ -85,6 +99,12 @@ export class SigninComponent implements OnInit {
         }
       }
     );
+  }
+
+  forgotPassword() {
+    this.dialog.open(SendEmailtDialogComponent, {data: {
+      forgotPassword: true
+    }});
   }
 
 }

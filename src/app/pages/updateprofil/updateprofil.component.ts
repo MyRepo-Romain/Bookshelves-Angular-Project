@@ -74,7 +74,7 @@ export class UpdateProfilComponent implements OnInit {
   }
 
   validateUserProfil() {
-    var isValid = true;
+    let isValid = true;
 
     if(this.userUpdateRequest.photoURL == undefined || this.userUpdateRequest.photoURL == '') {
       this.cfv.invalid(this.cfv.photo, ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection.code);
@@ -93,7 +93,7 @@ export class UpdateProfilComponent implements OnInit {
   }
 
   valideUserConnexion() {
-    var isValid = true;
+    let isValid = true;
 
     if(this.loginRequest.email == undefined || this.loginRequest.email == '') {
       this.cfv.invalid(this.cfv.email, ErrorTypeHelper.GLOBAL_ERROR.invalidEmail.code);

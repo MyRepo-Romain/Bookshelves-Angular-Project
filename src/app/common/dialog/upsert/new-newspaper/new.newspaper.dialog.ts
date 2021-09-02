@@ -76,7 +76,7 @@ export class NewNewspaperDialogComponent implements OnInit {
   }
 
   validate() {
-    var isValid = true;
+    let isValid = true;
 
     if(this.newspaperRequest.photo == undefined || this.newspaperRequest.photo == '') {
       this.cfv.invalid(this.cfv.photo, ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection.code);

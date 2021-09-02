@@ -1,0 +1,27 @@
+<div *ngIf="forgotPassword == false">
+    <h3>Vérifier votre boite mail.</h3>
+    <p>Un mail viens d'etre envoyé à l'adresse email : <br><b>{{ userEmail }}.</b></p>
+    <p>Pour activer votre espace, cliquez sur le lien qui se trouve dans cet email.</p>
+    <p>Si vous ne le voyez pas, pensez à verifier dans votre dossier de spams.</p>
+    <mat-dialog-actions class="d-flex justify-content-end">
+        <button mat-flat-button color="primary" (click)="close()">Fermer la fenêtre</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="forgotPassword == true">
+    <h3>Vous avez oublié votre mot de passe ?</h3>
+    <p>Pour réinitialiser votre mot de passe, veuillez saisir votre email de connexion</p>
+    <div class="d-flex justify-content-around">
+        <p class="mt-auto">Adresse email : </p>
+        <mat-form-field>
+            <input matInput placeholder="Email" type="email" [formControl]="cfv.email.ac" [(ngModel)]="email" name="email" (keyup.enter)="validate()">
+            <mat-error class="mat-error" *ngIf="!cfv.email.ac.valid">
+                {{ cfv.email.ac.getError('msg') }}
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <p>Si vous ne le voyez pas, pensez à verifier dans votre dossier de spams.</p>
+    <mat-dialog-actions class="d-flex justify-content-end">
+        <button mat-flat-button color="primary" (click)="validate()">Changer de mot de passe</button>
+    </mat-dialog-actions>
+</div>

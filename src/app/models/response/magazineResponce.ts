@@ -9,7 +9,7 @@ export class MagazineResponse {
 
     public constructor(dx: any) {
         if(dx != undefined) {
-            var data = dx.data();
+            let data = dx.data();
             this.id = dx.id;
             this.userId = data.userId;
             this.title = data.title;

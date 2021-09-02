@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { ActionConfirmed } from 'app/common/dialog/footer-collapse/footer-collapse.component';
+import { ActionConfirmed } from 'app/common/footer-collapse/footer-collapse.component';
 import { NewNewspaperDialogComponent } from 'app/common/dialog/upsert/new-newspaper/new.newspaper.dialog';
 import { FirestoreService } from 'app/core/firestore.service';
 import { NewspaperResponse } from 'app/models/response/newspaperResponce';

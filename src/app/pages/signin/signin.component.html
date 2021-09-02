@@ -16,6 +16,7 @@
                             {{ cfv.password.ac.getError('msg') }}
                         </mat-error>
                     </mat-form-field>
+                    <p class="ml-auto forgot-email"><a mat-flat-button [disableRipple]="true" (click)="forgotPassword()">Mot de passe oublié ?</a></p>
                 </mat-card-content>
                 <mat-card-actions class="d-flex justify-content-around">
                     <a mat-flat-button color="primary" class="connect" (click)="validate()">Se connecter</a>

@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from 'app/core/firestore.service';
 import { MangaResponse } from 'app/models/response/mangaResponse';
 import { NewMangaDialogComponent } from 'app/common/dialog/upsert/new-manga/new.manga.dialog';
-import { ActionConfirmed } from 'app/common/dialog/footer-collapse/footer-collapse.component';
+import { ActionConfirmed } from 'app/common/footer-collapse/footer-collapse.component';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({

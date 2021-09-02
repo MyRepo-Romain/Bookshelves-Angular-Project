@@ -40,6 +40,14 @@ export class FirestoreService {
     firebase.auth().signOut();
   }
 
+  verifyEmail() {
+    return firebase.auth().currentUser.sendEmailVerification();
+  }
+
+  forgotPassword(email: string) {
+    return firebase.auth().sendPasswordResetEmail(email);
+  }
+
   // endregion //
 
   //#region user

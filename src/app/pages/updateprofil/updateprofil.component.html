@@ -31,7 +31,13 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <input matInput placeholder="Password" type="text" [formControl]="cfv.password.ac" [(ngModel)]="loginRequest.password" name="password" (keyup.enter)="validate()">
+                        <input matInput placeholder="Ancien mot de passe" type="text" [formControl]="cfv.password.ac" [(ngModel)]="loginRequest.password" name="password" (keyup.enter)="validate()">
+                        <mat-error class="mat-error" *ngIf="!cfv.password.ac.valid">
+                            {{ cfv.password.ac.getError('msg') }}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Nouveau mot de passe" type="text" [formControl]="cfv.password.ac" [(ngModel)]="loginRequest.password" name="password" (keyup.enter)="validate()">
                         <mat-error class="mat-error" *ngIf="!cfv.password.ac.valid">
                             {{ cfv.password.ac.getError('msg') }}
                         </mat-error>

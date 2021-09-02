@@ -73,7 +73,7 @@ export class NewMangaDialogComponent implements OnInit {
   }
 
   validate() {
-    var isValid = true;
+    let isValid = true;
 
     if(this.mangaRequest.photo == undefined || this.mangaRequest.photo == '') {
       this.cfv.invalid(this.cfv.photo, ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection.code);

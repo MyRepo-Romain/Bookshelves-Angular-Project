@@ -19,7 +19,7 @@ import { BookListComponent } from 'app/pages/book-list/book-list.component';
 import { HeaderComponent } from 'app/common/header/header.component';
 import { FileDownloaderComponent } from 'app/common/component/file-downloader/file-downloader.component';
 import { NewBookDialogComponent } from 'app/common/dialog/upsert/new-book/new.book.dialog';
-import { FooterCollapseComponent } from 'app/common/dialog/footer-collapse/footer-collapse.component';
+import { FooterCollapseComponent } from 'app/common/footer-collapse/footer-collapse.component';
 import { MenuComponent } from 'app/common/menu/menu.component';
 import { HomeComponent } from 'app/pages/home/home.component';
 import { NewspaperListComponent } from 'app/pages/newspaper-list/newspaper-list.component';
@@ -32,6 +32,7 @@ import { NewNewspaperDialogComponent } from 'app/common/dialog/upsert/new-newspa
 import { DateSelectComponent } from 'app/common/component/date-picker/date-picker.component';
 import { NewMangaDialogComponent } from './common/dialog/upsert/new-manga/new.manga.dialog';
 import { DeleteUserAccountDialogComponent } from './common/dialog/delete-user-account/delete.user.account.dialog';
+import { SendEmailtDialogComponent } from './common/dialog/send-email/send.email.dialog';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { DeleteUserAccountDialogComponent } from './common/dialog/delete-user-ac
     MangaListComponent,
     ProfilComponent,
     UpdateProfilComponent,
-    DateSelectComponent
+    DateSelectComponent,
+    SendEmailtDialogComponent
   ],
   imports: [
     AppRoutingModule,
@@ -75,7 +77,8 @@ import { DeleteUserAccountDialogComponent } from './common/dialog/delete-user-ac
     NewMagazineDialogComponent,
     NewNewspaperDialogComponent,
     NewMangaDialogComponent,
-    DeleteUserAccountDialogComponent
+    DeleteUserAccountDialogComponent,
+    SendEmailtDialogComponent
   ],
   bootstrap: [AppComponent]
 })
