@@ -53,7 +53,7 @@ export class BookListComponent implements OnInit {
   newBook() {
     const dialogRef = this.dialog.open(NewBookDialogComponent , { data: { bookResponse: undefined }});
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.initialiazeDataSource();
       }
     });
@@ -62,14 +62,14 @@ export class BookListComponent implements OnInit {
   editBook(entity: BookResponse) {
     const dialogRef = this.dialog.open(NewBookDialogComponent , { data: { bookResponse: entity }});
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.initialiazeDataSource();
       }
     });
   }
 
   actionHandler(actionConfirmed: ActionConfirmed) {
-    if(actionConfirmed.edit) {
+    if (actionConfirmed.edit) {
       this.editBook(actionConfirmed.entity);
     } else {
       this.deleteBook(actionConfirmed.entity);

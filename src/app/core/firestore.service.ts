@@ -20,7 +20,7 @@ export class FirestoreService {
   }
 
   private handleError(err: HttpErrorResponse | any) {
-    if(err.status === 401) {
+    if (err.status === 401) {
       // Nothing for the moment
     }
     return throwError(err);
@@ -29,11 +29,17 @@ export class FirestoreService {
   // region authentification //
 
   createNewUser(loginRequest: LoginRequest) {
-    return firebase.auth().createUserWithEmailAndPassword(loginRequest.email, loginRequest.password);
+    return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    .then(() => {
+      return firebase.auth().createUserWithEmailAndPassword(loginRequest.email, loginRequest.password);
+    })
   }
 
   signInUser(loginRequest: LoginRequest) {
-    return firebase.auth().signInWithEmailAndPassword(loginRequest.email, loginRequest.password);
+    return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    .then(() => {
+      return firebase.auth().signInWithEmailAndPassword(loginRequest.email, loginRequest.password);
+    })
   }
 
   signOutUser() {
@@ -73,7 +79,7 @@ export class FirestoreService {
 
 
     deleteUserAccount(userPhoto: string) {
-      if(userPhoto != undefined || userPhoto != null) {
+      if (userPhoto != undefined || userPhoto != null) {
         firebase.storage().refFromURL(userPhoto).delete();
       }
       return firebase.auth().currentUser.delete();

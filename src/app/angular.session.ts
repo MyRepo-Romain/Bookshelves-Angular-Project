@@ -50,7 +50,7 @@ export class AngularSession {
 
     public load() {
         let buffer = localStorage.getItem('bookshelves-user');
-        if(buffer != '' && buffer != null) {
+        if (buffer != '' && buffer != null) {
             let obj = JSON.parse(buffer);
             this.jwtToken = obj.jwt;
             this.loggedIn.next(JwtHelper.isAuth(this.jwtToken));

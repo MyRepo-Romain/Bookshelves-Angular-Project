@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
       this.isLoggedIn = this.session.isLoggedIn;
       this.isLoggedIn.subscribe(value => {
-        if(value) {
+        if (value) {
             this.getMyself();
         }
     });
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
 
   getMyself() {
     firebase.auth().onAuthStateChanged(user => {
-      if(user) {
+      if (user) {
         this.user = user;
       } else {
         this.user = this.firestoreService.getMySelf();

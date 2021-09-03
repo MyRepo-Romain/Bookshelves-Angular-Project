@@ -39,7 +39,7 @@ export class DeleteUserAccountDialogComponent  implements OnInit{
       this.magazineCollection = new Array();
       this.newspaperCollection = new Array();
 
-    if(data.userResponse != undefined) {
+    if (data.userResponse != undefined) {
         this.userId = data.userId;
         this.userPhoto = data.userResponse.photoURL;
       }
@@ -65,14 +65,14 @@ export class DeleteUserAccountDialogComponent  implements OnInit{
       }
 
   deleteUserData() {
-    if(this.bookCollection != undefined || this.bookCollection.length != 0) {
+    if (this.bookCollection != undefined || this.bookCollection.length != 0) {
       this.bookCollection.forEach(element => {
         this.firestoreService.deleteFile(element.photo)
       });
       this.firestoreService.deleteUserBook(this.userId);
     }
 
-    if(this.mangaCollection != undefined || this.mangaCollection.length != 0) {
+    if (this.mangaCollection != undefined || this.mangaCollection.length != 0) {
       this.mangaCollection.forEach(element => {
         this.firestoreService.deleteFile(element.photo).then( () => {
         this.firestoreService.deleteUserManga(this.userId);
@@ -80,7 +80,7 @@ export class DeleteUserAccountDialogComponent  implements OnInit{
       });
     }
 
-    if(this.magazineCollection != undefined || this.magazineCollection.length != 0) {
+    if (this.magazineCollection != undefined || this.magazineCollection.length != 0) {
       this.magazineCollection.forEach(element => {
         this.firestoreService.deleteFile(element.photo).then( () => {
         this.firestoreService.deleteUserMagazine(this.userId);
@@ -88,7 +88,7 @@ export class DeleteUserAccountDialogComponent  implements OnInit{
       });
     }
 
-    if(this.newspaperCollection != undefined || this.newspaperCollection.length != 0) {
+    if (this.newspaperCollection != undefined || this.newspaperCollection.length != 0) {
       this.newspaperCollection.forEach(element => {
         this.firestoreService.deleteFile(element.photo).then( () => {
         this.firestoreService.deleteUserNewpaper(this.userId);
@@ -106,7 +106,7 @@ export class DeleteUserAccountDialogComponent  implements OnInit{
         this.router.navigate(['signin']);
       },
       (error: any) => {
-        if(error.code === "auth/requires-recent-login") {
+        if (error.code === "auth/requires-recent-login") {
           this.snackBar.open(ErrorTypeHelper.SNACK_BAR_DELETE.deleteAccountFail.msg, 'OK');
         }
       }

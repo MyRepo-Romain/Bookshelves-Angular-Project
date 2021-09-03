@@ -33,7 +33,7 @@ export class NewBookDialogComponent implements OnInit {
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, private router: Router, public dialogRef: MatDialogRef<NewBookDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: NewBookBag, public dialogService: MatDialog) {
 
-    if(data.bookResponse != undefined) {
+    if (data.bookResponse != undefined) {
       this.bookRequest = new BookRequest(data.bookResponse);
       this.newEntity = false;
     } else {
@@ -58,14 +58,14 @@ export class NewBookDialogComponent implements OnInit {
 
   getUser() {
     firebase.auth().onAuthStateChanged(response => {
-      if(response) {
+      if (response) {
         this.userId = response.uid;
       }
     });
   }
 
   fileUrlEventhandler(photo: string) {
-    if(photo != undefined) {
+    if (photo != undefined) {
       this.bookRequest.photo = photo;
       this.isDisabled = false;
     }
@@ -74,37 +74,37 @@ export class NewBookDialogComponent implements OnInit {
   validate() {
     let isValid = true;
 
-    if(this.bookRequest.photo == undefined || this.bookRequest.photo == '') {
+    if (this.bookRequest.photo == undefined || this.bookRequest.photo == '') {
       this.cfv.invalid(this.cfv.photo, ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection.code);
       isValid = false;
     }
 
-    if(this.bookRequest.title == undefined || this.bookRequest.title == '') {
+    if (this.bookRequest.title == undefined || this.bookRequest.title == '') {
         this.cfv.invalid(this.cfv.title, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         isValid = false;
     }
 
-    if(this.bookRequest.author == undefined || this.bookRequest.author == '') {
+    if (this.bookRequest.author == undefined || this.bookRequest.author == '') {
         this.cfv.invalid(this.cfv.author, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         isValid = false;
     }
 
-    if(this.bookRequest.genre == undefined || this.bookRequest.genre == '') {
+    if (this.bookRequest.genre == undefined || this.bookRequest.genre == '') {
       this.cfv.invalid(this.cfv.genre, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
-    if(this.bookRequest.description == undefined || this.bookRequest.description == '') {
+    if (this.bookRequest.description == undefined || this.bookRequest.description == '') {
       this.cfv.invalid(this.cfv.description, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
-    if(isNaN(this.bookRequest.page) || this.bookRequest.page < 0) {
+    if (isNaN(this.bookRequest.page) || this.bookRequest.page < 0) {
       this.cfv.invalid(this.cfv.page, ErrorTypeHelper.GLOBAL_ERROR.invalidNumberNotZero.code);
       isValid = false;
     }
 
-    if(isValid) {
+    if (isValid) {
       this.saveBook(!this.newEntity);
     }
   }

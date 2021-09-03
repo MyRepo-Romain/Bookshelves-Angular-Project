@@ -20,8 +20,8 @@ export class AppComponent implements OnInit{
   constructor(private session: AngularSession) { }
 
   onResized(event: ResizedEvent) {
-    if(this.menu != undefined) {
-        if(event.newWidth < environment.smartphoneWidth) {
+    if (this.menu != undefined) {
+        if (event.newWidth < environment.smartphoneWidth) {
             this.menu.mode = 'over';
         } else {
             this.menu.mode = 'side';
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.isLoggedIn = this.session.isLoggedIn;
     this.session.isMenuVisible.subscribe(() => {
-      if(this.menu != undefined) {
+      if (this.menu != undefined) {
           this.menu.opened = this.session.menuVisibilityValue;
           this.menu.openedChange.subscribe((value) => {
               this.session.menuVisibilityValue = value;

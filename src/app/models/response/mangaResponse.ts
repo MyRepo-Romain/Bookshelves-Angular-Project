@@ -9,7 +9,7 @@ export class MangaResponse {
     public userId: string;
 
     public constructor(dx: any) {
-        if(dx != undefined) {
+        if (dx != undefined) {
             let data = dx.data();
             this.id = dx.id;
             this.userId = data.userId;

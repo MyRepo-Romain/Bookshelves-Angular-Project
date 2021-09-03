@@ -33,7 +33,7 @@ export class NewMagazineDialogComponent implements OnInit {
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, private router: Router, public dialogRef: MatDialogRef<NewMagazineDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: NewMagazineBag, public dialogService: MatDialog) {
 
-    if(data.magazineResponse != undefined) {
+    if (data.magazineResponse != undefined) {
       this.magazineRequest = new MagazineRequest(data.magazineResponse);
       this.newEntity = false;
     } else {
@@ -57,14 +57,14 @@ export class NewMagazineDialogComponent implements OnInit {
 
   getUser() {
     firebase.auth().onAuthStateChanged(response => {
-      if(response) {
+      if (response) {
         this.userId = response.uid;
       }
     });
   }
 
   fileUrlEventhandler(photo: string) {
-    if(photo != undefined) {
+    if (photo != undefined) {
       this.magazineRequest.photo = photo;
       this.isDisabled = false;
     }
@@ -73,32 +73,32 @@ export class NewMagazineDialogComponent implements OnInit {
   validate() {
     let isValid = true;
 
-    if(this.magazineRequest.photo == undefined || this.magazineRequest.photo == '') {
+    if (this.magazineRequest.photo == undefined || this.magazineRequest.photo == '') {
       this.cfv.invalid(this.cfv.photo, ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection.code);
       isValid = false;
     }
 
-    if(this.magazineRequest.title == undefined || this.magazineRequest.title == '') {
+    if (this.magazineRequest.title == undefined || this.magazineRequest.title == '') {
         this.cfv.invalid(this.cfv.title, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         isValid = false;
     }
 
-    if(this.magazineRequest.theme == undefined || this.magazineRequest.theme == '') {
+    if (this.magazineRequest.theme == undefined || this.magazineRequest.theme == '') {
       this.cfv.invalid(this.cfv.genre, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
-    if(this.magazineRequest.description == undefined || this.magazineRequest.description == '') {
+    if (this.magazineRequest.description == undefined || this.magazineRequest.description == '') {
       this.cfv.invalid(this.cfv.description, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
-    if(isNaN(this.magazineRequest.page) || this.magazineRequest.page < 0) {
+    if (isNaN(this.magazineRequest.page) || this.magazineRequest.page < 0) {
       this.cfv.invalid(this.cfv.page, ErrorTypeHelper.GLOBAL_ERROR.invalidNumberNotZero.code);
       isValid = false;
     }
 
-    if(isValid) {
+    if (isValid) {
       this.saveMagazine(!this.newEntity);
     }
   }

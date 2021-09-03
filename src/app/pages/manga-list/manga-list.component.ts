@@ -53,7 +53,7 @@ export class MangaListComponent implements OnInit {
   newBook() {
     const dialogRef = this.dialog.open(NewMangaDialogComponent , { data: { bookResponse: undefined }});
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.initialiazeDataSource();
       }
     });
@@ -62,14 +62,14 @@ export class MangaListComponent implements OnInit {
   editManga(entity: MangaResponse) {
     const dialogRef = this.dialog.open(NewMangaDialogComponent , { data: { bookResponse: entity }});
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.initialiazeDataSource();
       }
     });
   }
 
   actionHandler(actionConfirmed: ActionConfirmed) {
-    if(actionConfirmed.edit) {
+    if (actionConfirmed.edit) {
       this.editManga(actionConfirmed.entity);
     } else {
       this.deleteManga(actionConfirmed.entity);

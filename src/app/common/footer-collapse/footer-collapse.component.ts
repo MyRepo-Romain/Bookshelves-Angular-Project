@@ -33,13 +33,13 @@ export class FooterCollapseComponent {
     }
 
     delete() {
-        if(this.entity != undefined) {
+        if (this.entity != undefined) {
             this.action.emit({ remove: true, edit: false, entity: this.entity });
         }
     }
 
     edit() {
-        if(this.entity != undefined) {
+        if (this.entity != undefined) {
             this.action.emit({ remove: false, edit: true, entity: this.entity });
         }
     }

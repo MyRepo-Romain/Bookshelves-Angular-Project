@@ -34,7 +34,7 @@ export class NewNewspaperDialogComponent implements OnInit {
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, private router: Router, public dialogRef: MatDialogRef<NewNewspaperDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: NewNewspaperBag, public dialogService: MatDialog) {
 
-    if(data.newspaperResponse != undefined) {
+    if (data.newspaperResponse != undefined) {
       this.newspaperRequest = new NewspaperRequest(data.newspaperResponse);
       this.newEntity = false;
     } else {
@@ -56,21 +56,21 @@ export class NewNewspaperDialogComponent implements OnInit {
 
   getUser() {
     firebase.auth().onAuthStateChanged(response => {
-      if(response) {
+      if (response) {
         this.userId = response.uid;
       }
     });
   }
 
   fileUrlEventhandler(photo: string) {
-    if(photo != undefined) {
+    if (photo != undefined) {
       this.newspaperRequest.photo = photo;
       this.isDisabled = false;
     }
   }
 
   public dateSelectedEventHandler(dateSelected: Date) {
-    if(dateSelected != undefined) {
+    if (dateSelected != undefined) {
         this.newspaperRequest.date = DateHelper.toLocal(dateSelected);
     }
   }
@@ -78,27 +78,27 @@ export class NewNewspaperDialogComponent implements OnInit {
   validate() {
     let isValid = true;
 
-    if(this.newspaperRequest.photo == undefined || this.newspaperRequest.photo == '') {
+    if (this.newspaperRequest.photo == undefined || this.newspaperRequest.photo == '') {
       this.cfv.invalid(this.cfv.photo, ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection.code);
       isValid = false;
     }
 
-    if(this.newspaperRequest.title == undefined || this.newspaperRequest.title == '') {
+    if (this.newspaperRequest.title == undefined || this.newspaperRequest.title == '') {
         this.cfv.invalid(this.cfv.title, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         isValid = false;
     }
 
-    if(this.newspaperRequest.description == undefined || this.newspaperRequest.description == '') {
+    if (this.newspaperRequest.description == undefined || this.newspaperRequest.description == '') {
       this.cfv.invalid(this.cfv.description, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
-    if(this.newspaperRequest.date == undefined) {
+    if (this.newspaperRequest.date == undefined) {
       this.cfv.invalid(this.cfv.datePK, ErrorTypeHelper.GLOBAL_ERROR.invalidDate.code);
       isValid = false;
     }
 
-    if(isValid) {
+    if (isValid) {
       this.saveNewspaper(!this.newEntity);
     }
   }

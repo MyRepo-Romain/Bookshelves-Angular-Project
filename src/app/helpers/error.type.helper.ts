@@ -6,6 +6,8 @@ export class ErrorTypeHelper {
         public static missingFileSelection: any = { code: 'missing_selection', msg: 'Vous devez selectionner un fichier' };
         public static invalidNumberNotZero: any = { code: 'invalid_number_not_zero', msg: 'Vous devez saisir un nombre supérieur à zéro' };
         public static invalidDate: any = { code: 'invalid_date', msg: 'Vous devez saisir une date' };
+        public static wrongConfirmEmail: any = { code: 'wrong_confirm_email', msg: 'L\'email saisie ne correspond pas' };
+        public static wrongConfirmUserPassword: any = { code: 'wrong_confirm_user_password', msg: 'Le mot de passe saisie ne correspond pas' };
     };
 
     static SIGN_IN_ERROR = class {

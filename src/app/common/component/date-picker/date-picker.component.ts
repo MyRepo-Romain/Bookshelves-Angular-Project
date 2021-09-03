@@ -44,9 +44,9 @@ export class DateSelectComponent implements OnInit {
 
     redirectClick() {
         let root = document.getElementById('dpk');
-        if(root != undefined) {
+        if (root != undefined) {
             let button = root.firstElementChild as HTMLElement;
-            if(button != undefined) {
+            if (button != undefined) {
                 button.click();
             }
         }

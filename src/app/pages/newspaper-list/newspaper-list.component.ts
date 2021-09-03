@@ -52,7 +52,7 @@ export class NewspaperListComponent implements OnInit {
   newBook() {
     const dialogRef = this.dialog.open(NewNewspaperDialogComponent , { data: { newspaperResponse: undefined }});
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.initialiazeDataSource();
       }
     });
@@ -61,14 +61,14 @@ export class NewspaperListComponent implements OnInit {
   editNewspaper(entity: NewspaperResponse) {
     const dialogRef = this.dialog.open(NewNewspaperDialogComponent , { data: { newspaperResponse: entity }});
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.initialiazeDataSource();
       }
     });
   }
 
   actionHandler(actionConfirmed: ActionConfirmed) {
-    if(actionConfirmed.edit) {
+    if (actionConfirmed.edit) {
       this.editNewspaper(actionConfirmed.entity);
     } else {
       this.deleteNewspaper(actionConfirmed.entity);

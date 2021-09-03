@@ -33,7 +33,7 @@ export class NewMangaDialogComponent implements OnInit {
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, private router: Router, public dialogRef: MatDialogRef<NewMangaDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: NewMangaBag, public dialogService: MatDialog) {
 
-    if(data.mangaResponse != undefined) {
+    if (data.mangaResponse != undefined) {
 
       this.mangaRequest = new MangaRequest(data.mangaResponse);
       this.newEntity = false;
@@ -59,14 +59,14 @@ export class NewMangaDialogComponent implements OnInit {
 
   getUser() {
     firebase.auth().onAuthStateChanged(response => {
-      if(response) {
+      if (response) {
         this.userId = response.uid;
       }
     });
   }
 
   fileUrlEventhandler(photo: string) {
-    if(photo != undefined) {
+    if (photo != undefined) {
       this.mangaRequest.photo = photo;
       this.isDisabled = false;
     }
@@ -75,37 +75,37 @@ export class NewMangaDialogComponent implements OnInit {
   validate() {
     let isValid = true;
 
-    if(this.mangaRequest.photo == undefined || this.mangaRequest.photo == '') {
+    if (this.mangaRequest.photo == undefined || this.mangaRequest.photo == '') {
       this.cfv.invalid(this.cfv.photo, ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection.code);
       isValid = false;
     }
 
-    if(this.mangaRequest.title == undefined || this.mangaRequest.title == '') {
+    if (this.mangaRequest.title == undefined || this.mangaRequest.title == '') {
         this.cfv.invalid(this.cfv.title, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         isValid = false;
     }
 
-    if(this.mangaRequest.author == undefined || this.mangaRequest.author == '') {
+    if (this.mangaRequest.author == undefined || this.mangaRequest.author == '') {
         this.cfv.invalid(this.cfv.author, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         isValid = false;
     }
 
-    if(this.mangaRequest.genre == undefined || this.mangaRequest.genre == '') {
+    if (this.mangaRequest.genre == undefined || this.mangaRequest.genre == '') {
       this.cfv.invalid(this.cfv.theme, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
-    if(this.mangaRequest.description == undefined || this.mangaRequest.description == '') {
+    if (this.mangaRequest.description == undefined || this.mangaRequest.description == '') {
       this.cfv.invalid(this.cfv.description, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
-    if(isNaN(this.mangaRequest.tome) || this.mangaRequest.tome < 0) {
+    if (isNaN(this.mangaRequest.tome) || this.mangaRequest.tome < 0) {
       this.cfv.invalid(this.cfv.tome, ErrorTypeHelper.GLOBAL_ERROR.invalidNumberNotZero.code);
       isValid = false;
     }
 
-    if(isValid) {
+    if (isValid) {
       this.saveManga(!this.newEntity);
     }
   }

@@ -26,7 +26,7 @@ export class SendEmailtDialogComponent  implements OnInit{
 
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, public dialogRef: MatDialogRef<SendEmailtDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: NewSendEmailBag, public dialogService: MatDialog,private snackBar: MatSnackBar) {
-    if(data != undefined) {
+    if (data != undefined) {
       this.userEmail = data.userEmail;
       this.forgotPassword = data.forgotPassword;
     }
@@ -41,7 +41,7 @@ export class SendEmailtDialogComponent  implements OnInit{
   }
 
   validate() {
-    if(this.email == '' || this.email == undefined) {
+    if (this.email == '' || this.email == undefined) {
       this.cfv.invalid(this.cfv.email, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       return false;
     }
@@ -56,7 +56,7 @@ export class SendEmailtDialogComponent  implements OnInit{
     });
     },
     (error: any) => {
-      if(error.code === "auth/user-not-found") {
+      if (error.code === "auth/user-not-found") {
         this.cfv.invalid(this.cfv.email, ErrorTypeHelper.FORGET_PASSWORD_ERROR.unknownEmail.code);
       }
     })

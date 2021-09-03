@@ -18,7 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class SigninComponent implements OnInit {
 
-  public inputUser = new LoginRequest(undefined);
+  public loginRequest: LoginRequest;
   public cfv: CustomFormValid;
   public user: UserResponse;
   public isNewAccount: boolean;
@@ -27,9 +27,9 @@ export class SigninComponent implements OnInit {
   constructor(private session: AngularSession, public fb: FormBuilder, private firestoreService: FirestoreService, private router: Router, public dialog: MatDialog) {
     this.session.clear();
     this.isNewAccount = false;
+    this.loginRequest = new LoginRequest(undefined);
 
-    this.cfv = new CustomFormValid(fb, ['name', 'email', 'password']);
-    this.cfv.name.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
+    this.cfv = new CustomFormValid(fb, ['email', 'password']);
     this.cfv.email.errors.push(ErrorTypeHelper.GLOBAL_ERROR.invalidEmail);
     this.cfv.email.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.email.errors.push(ErrorTypeHelper.SIGN_IN_ERROR.invalidAuth);
@@ -43,26 +43,24 @@ export class SigninComponent implements OnInit {
   }
 
   isNewAccountFunction() {
-    if(this.isNewAccount) {
-      this.isNewAccount = false;
-    } else {
-      this.isNewAccount = true;
-    }
+    this.isNewAccount = !this.isNewAccount;
+    this.loginRequest.email = '';
+    this.loginRequest.password = '';
   }
 
   validate() {
 
-    if(this.inputUser.email == '' || this.inputUser.email == undefined) {
+    if (this.loginRequest.email == '' || this.loginRequest.email == undefined) {
       this.cfv.invalid(this.cfv.email, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       return false;
     }
 
-    if(!EmailValidator.validate(this.inputUser.email)) {
+    if (!EmailValidator.validate(this.loginRequest.email)) {
         this.cfv.invalid(this.cfv.email, ErrorTypeHelper.GLOBAL_ERROR.invalidEmail.code);
         return false;
     }
 
-    if(this.inputUser.password == '' || this.inputUser.password == undefined) {
+    if (this.loginRequest.password == '' || this.loginRequest.password == undefined) {
         this.cfv.invalid(this.cfv.password, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         return false;
     }
@@ -70,28 +68,30 @@ export class SigninComponent implements OnInit {
     this.login(!this.isNewAccount);
   }
 
-  login(newAccount: boolean) {
-    let request = newAccount ? this.firestoreService.signInUser(this.inputUser) : this.firestoreService.createNewUser(this.inputUser);
+  login(isNewAccount: boolean) {
+    let request = isNewAccount ? this.firestoreService.signInUser(this.loginRequest) : this.firestoreService.createNewUser(this.loginRequest);
     request.then(
       response => {
-        console.log(response)
-        if(response.user.emailVerified == false) {
+        if (response.user.emailVerified == false) {
           this.firestoreService.verifyEmail().then(() => {
             this.dialog.open(SendEmailtDialogComponent, {data: {
-              userEmail: this.inputUser.email,
+              userEmail: this.loginRequest.email,
               forgotPassword: false
-            }});
+            },
+              disableClose: true
+            });
           });
           this.isNewAccount = false;
-        } else if(response.user.emailVerified == true) {
+        } else if (response.user.emailVerified == true) {
+          
           this.session.setLogin();
           this.router.navigate(['home']);
         }
       },
       (error: any) => {
-        if(error.code === "auth/email-already-in-use") {
+        if (error.code === "auth/email-already-in-use") {
           this.cfv.invalid(this.cfv.email, ErrorTypeHelper.CREATE_USER_ERROR.emailAlreadyUsed.code);
-        } else if(error.code === "auth/user-not-found") {
+        } else if (error.code === "auth/user-not-found") {
           this.cfv.invalid(this.cfv.email, ErrorTypeHelper.FORGET_PASSWORD_ERROR.unknownEmail.code);
         } else {
           this.cfv.invalid(this.cfv.email, ErrorTypeHelper.SIGN_IN_ERROR.invalidAuth.code);
