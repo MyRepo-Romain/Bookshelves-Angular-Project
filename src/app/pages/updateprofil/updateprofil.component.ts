@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { UserUpdateRequest } from 'app/models/request/userUpdateRequest';
 import { UserResponse } from 'app/models/response/userResponse';
 import { LoginRequest } from 'app/models/request/loginRequest';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-updateprofil',
@@ -30,8 +31,8 @@ export class UpdateProfilComponent implements OnInit {
   public errorMessage: string;
   public newEmail: string;
   public confirmEmail: string;
-  public newUserPassword: string;
-  public confirmUserPassword: string;
+  public newPassword: string;
+  public confirmPassword: string;
 
   public newAccount: boolean;
   public information: boolean;
@@ -45,13 +46,13 @@ export class UpdateProfilComponent implements OnInit {
     this.loginRequest = new LoginRequest(undefined);
     this.newEmail = '';
     this.confirmEmail = '';
-    this.newUserPassword = '';
-    this.confirmUserPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
     this.information = false;
     this.password = false;
     this.email = false;
 
-    this.cfv = new CustomFormValid(fb, ['displayName', 'photo', 'newEmail', 'confirmEmail', 'newUserPassword', 'confirmUserPassword']);
+    this.cfv = new CustomFormValid(fb, ['displayName', 'photo', 'newEmail', 'confirmEmail', 'newPassword', 'confirmPassword']);
 
     this.cfv.displayName.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.photo.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection);
@@ -64,9 +65,13 @@ export class UpdateProfilComponent implements OnInit {
     this.cfv.confirmEmail.errors.push(ErrorTypeHelper.CREATE_USER_ERROR.emailAlreadyUsed);
     this.cfv.confirmEmail.errors.push(ErrorTypeHelper.GLOBAL_ERROR.wrongConfirmEmail);
 
-    this.cfv.newUserPassword.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
-    this.cfv.confirmUserPassword.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
-    this.cfv.confirmUserPassword.errors.push(ErrorTypeHelper.GLOBAL_ERROR.wrongConfirmUserPassword);
+    this.cfv.newPassword.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
+    this.cfv.newPassword.errors.push(ErrorTypeHelper.GLOBAL_ERROR.toWeakPassword);
+
+    this.cfv.confirmPassword.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
+    this.cfv.confirmPassword.errors.push(ErrorTypeHelper.GLOBAL_ERROR.wrongConfirmPassword);
+    this.cfv.confirmPassword.errors.push(ErrorTypeHelper.GLOBAL_ERROR.toWeakPassword);
+
   }
 
   ngOnInit() {
@@ -147,21 +152,33 @@ export class UpdateProfilComponent implements OnInit {
         }
         break;
       case 3:     
-        if (this.newUserPassword == undefined || this.newUserPassword == '') {
-          this.cfv.invalid(this.cfv.newUserPassword, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
+        if (this.newPassword == undefined || this.newPassword == '') {
+          this.cfv.invalid(this.cfv.newPassword, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
           isValid = false;
         }
 
-        if (this.confirmUserPassword == undefined || this.confirmUserPassword == '') {
-          this.cfv.invalid(this.cfv.confirmUserPassword, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
+        if (!environment.passwordRegex.test(this.newPassword)) {
+          this.cfv.invalid(this.cfv.newPassword, ErrorTypeHelper.GLOBAL_ERROR.toWeakPassword.code);
+          return false;
+        }
+
+        if (this.confirmPassword == undefined || this.confirmPassword == '') {
+          this.cfv.invalid(this.cfv.confirmPassword, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
           isValid = false;
-        } else if (this.confirmUserPassword != this.newUserPassword) {
-          this.cfv.invalid(this.cfv.confirmUserPassword, ErrorTypeHelper.GLOBAL_ERROR.wrongConfirmUserPassword.code);
+        }
+        
+        if (this.confirmPassword != this.newPassword) {
+          this.cfv.invalid(this.cfv.confirmPassword, ErrorTypeHelper.GLOBAL_ERROR.wrongConfirmPassword.code);
           isValid = false;
+        }
+
+        if (!environment.passwordRegex.test(this.confirmPassword)) {
+          this.cfv.invalid(this.cfv.confirmPassword, ErrorTypeHelper.GLOBAL_ERROR.toWeakPassword.code);
+          return false;
         }
   
         if (isValid) {
-          this.loginRequest.password = this.confirmUserPassword;
+          this.loginRequest.password = this.confirmPassword;
           this.updatePassword();
         }
         break;

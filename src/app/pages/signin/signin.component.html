@@ -1,5 +1,5 @@
 <div class="container-fluid background-signin">
-    <form  action="" class="justify-content-center login-card">
+    <form class="justify-content-center login-card">
         <mat-card class="mat-elevation-z4">
 
             <div class="signin-content" *ngIf="isNewAccount == false">
@@ -29,15 +29,15 @@
                 <mat-card-title>Créer un compte</mat-card-title>
                 <mat-card-content fxLayout="column">
                     <mat-form-field>
-                        <input matInput autocomplete='new-email' placeholder="Email" type="email" [formControl]="cfv.email.ac" [(ngModel)]="loginRequest.email" name="email" (keyup.enter)="validate()">
-                        <mat-error class="mat-error" *ngIf="!cfv.email.ac.valid">
-                            {{ cfv.email.ac.getError('msg') }}
+                        <input matInput autocomplete='new-email' placeholder="Email" type="email" [formControl]="cfv.newEmail.ac" [(ngModel)]="newEmail" name="newEmail" (keyup.enter)="validate()" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$">
+                        <mat-error class="mat-error" *ngIf="!cfv.newEmail.ac.valid">
+                            {{ cfv.newEmail.ac.getError('msg') }}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <input matInput autocomplete='new-password' placeholder="Mot de passe" type="password" [formControl]="cfv.password.ac" [(ngModel)]="loginRequest.password" name="password" (keyup.enter)="validate()">
-                        <mat-error class="mat-error" *ngIf="!cfv.password.ac.valid">
-                            {{ cfv.password.ac.getError('msg') }}
+                        <input matInput autocomplete='new-password' placeholder="Mot de passe" type="newPassword" [formControl]="cfv.newPassword.ac" [(ngModel)]="newPassword" name="newPassword" (keyup.enter)="validate()">
+                        <mat-error class="mat-error" *ngIf="!cfv.newPassword.ac.valid">
+                            {{ cfv.newPassword.ac.getError('msg') }}
                         </mat-error>
                     </mat-form-field>
                 </mat-card-content>

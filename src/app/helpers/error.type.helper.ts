@@ -7,7 +7,8 @@ export class ErrorTypeHelper {
         public static invalidNumberNotZero: any = { code: 'invalid_number_not_zero', msg: 'Vous devez saisir un nombre supérieur à zéro' };
         public static invalidDate: any = { code: 'invalid_date', msg: 'Vous devez saisir une date' };
         public static wrongConfirmEmail: any = { code: 'wrong_confirm_email', msg: 'L\'email saisie ne correspond pas' };
-        public static wrongConfirmUserPassword: any = { code: 'wrong_confirm_user_password', msg: 'Le mot de passe saisie ne correspond pas' };
+        public static wrongConfirmPassword: any = { code: 'wrong_confirm_password', msg: 'Le mot de passe saisie ne correspond pas' };
+        public static toWeakPassword: any = { code: 'to_weak_password', msg: 'Le mot de passe saisie doit contenir au moins 8 caractères et au moins une majuscule, un nombre et un caractère spécial' };
     };
 
     static SIGN_IN_ERROR = class {

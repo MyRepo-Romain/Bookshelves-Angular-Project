@@ -12,7 +12,9 @@ export const environment = {
     messagingSenderId: "75171728316",
     appId: "1:75171728316:web:7ddffa582c5d604ba0b9b9"
   },
-  smartphoneWidth: 734
+  smartphoneWidth: 734,
+  passwordRegex: new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-+])(?!.*?[\s]).{8,}$/)
+
 };
 
 /*

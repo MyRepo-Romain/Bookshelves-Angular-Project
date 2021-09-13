@@ -42,16 +42,16 @@
                 </mat-card-content>
 
                 <mat-card-content fxLayout="column" *ngIf="password">
-                    <mat-form-field class="mt-2">
-                        <input matInput placeholder="Nouveau mot de passe" type="text" [formControl]="cfv.newUserPassword.ac" [(ngModel)]="newUserPassword" name="newUserPassword" (keyup.enter)="validate(2)">
-                        <mat-error class="mat-error" *ngIf="!cfv.newUserPassword.ac.valid">
-                            {{ cfv.newUserPassword.ac.getError('msg') }}
+                    <mat-form-field class="mt-3">
+                        <input matInput placeholder="Nouveau mot de passe" type="text" [formControl]="cfv.newPassword.ac" [(ngModel)]="newPassword" name="newPassword" (keyup.enter)="validate(2)">
+                        <mat-error class="mat-error" *ngIf="!cfv.newPassword.ac.valid">
+                            {{ cfv.newPassword.ac.getError('msg') }}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field>
-                        <input matInput placeholder="Confirmer le mot de passe" type="text" [formControl]="cfv.confirmUserPassword.ac" [(ngModel)]="confirmUserPassword" name="confirmUserPassword" (keyup.enter)="validate(3)">
-                        <mat-error class="mat-error" *ngIf="!cfv.confirmUserPassword.ac.valid">
-                            {{ cfv.confirmUserPassword.ac.getError('msg') }}
+                    <mat-form-field class="mt-3">
+                        <input matInput placeholder="Confirmer le mot de passe" type="text" [formControl]="cfv.confirmPassword.ac" [(ngModel)]="confirmPassword" name="confirmPassword" (keyup.enter)="validate(3)">
+                        <mat-error class="mat-error" *ngIf="!cfv.confirmPassword.ac.valid">
+                            {{ cfv.confirmPassword.ac.getError('msg') }}
                         </mat-error>
                     </mat-form-field>
                 </mat-card-content>

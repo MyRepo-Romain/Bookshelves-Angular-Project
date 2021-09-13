@@ -10,6 +10,7 @@ import { AngularSession } from 'app/angular.session';
 import { UserResponse } from 'app/models/response/userResponse';
 import { SendEmailtDialogComponent } from 'app/common/dialog/send-email/send.email.dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-signin',
@@ -23,20 +24,30 @@ export class SigninComponent implements OnInit {
   public user: UserResponse;
   public isNewAccount: boolean;
   public errorMessage: string;
+  public newEmail: string;
+  public newPassword: string;
 
   constructor(private session: AngularSession, public fb: FormBuilder, private firestoreService: FirestoreService, private router: Router, public dialog: MatDialog) {
     this.session.clear();
     this.isNewAccount = false;
     this.loginRequest = new LoginRequest(undefined);
 
-    this.cfv = new CustomFormValid(fb, ['email', 'password']);
-    this.cfv.email.errors.push(ErrorTypeHelper.GLOBAL_ERROR.invalidEmail);
+    this.cfv = new CustomFormValid(fb, ['email', 'password', 'newEmail', 'newPassword']);
+    this.cfv.newEmail.errors.push(ErrorTypeHelper.GLOBAL_ERROR.invalidEmail);
+    this.cfv.newEmail.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
+    this.cfv.newEmail.errors.push(ErrorTypeHelper.GLOBAL_ERROR.invalidEmail);
+    this.cfv.newEmail.errors.push(ErrorTypeHelper.CREATE_USER_ERROR.emailAlreadyUsed);
+
     this.cfv.email.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.email.errors.push(ErrorTypeHelper.SIGN_IN_ERROR.invalidAuth);
     this.cfv.email.errors.push(ErrorTypeHelper.FORGET_PASSWORD_ERROR.unknownEmail);
     this.cfv.email.errors.push(ErrorTypeHelper.CREATE_USER_ERROR.emailAlreadyUsed);
+
     this.cfv.password.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.password.errors.push(ErrorTypeHelper.SIGN_IN_ERROR.invalidAuth);
+
+    this.cfv.newPassword.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
+    this.cfv.newPassword.errors.push(ErrorTypeHelper.GLOBAL_ERROR.toWeakPassword);
    }
 
   ngOnInit(): void {
@@ -44,25 +55,50 @@ export class SigninComponent implements OnInit {
 
   isNewAccountFunction() {
     this.isNewAccount = !this.isNewAccount;
-    this.loginRequest.email = '';
-    this.loginRequest.password = '';
+    this.newEmail = '';
+    this.newPassword = '';
   }
 
   validate() {
 
-    if (this.loginRequest.email == '' || this.loginRequest.email == undefined) {
-      this.cfv.invalid(this.cfv.email, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
-      return false;
-    }
-
-    if (!EmailValidator.validate(this.loginRequest.email)) {
-        this.cfv.invalid(this.cfv.email, ErrorTypeHelper.GLOBAL_ERROR.invalidEmail.code);
+    if (this.isNewAccount == false) {
+      if (this.loginRequest.email == '' || this.loginRequest.email == undefined) {
+        this.cfv.invalid(this.cfv.email, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         return false;
-    }
+      }
+  
+      if (!EmailValidator.validate(this.loginRequest.email)) {
+          this.cfv.invalid(this.cfv.email, ErrorTypeHelper.GLOBAL_ERROR.invalidEmail.code);
+          return false;
+      }
 
-    if (this.loginRequest.password == '' || this.loginRequest.password == undefined) {
+      if (this.loginRequest.password == '' || this.loginRequest.password == undefined) {
         this.cfv.invalid(this.cfv.password, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         return false;
+      }
+    } else {
+      if (this.newEmail == '' || this.newEmail == undefined) {
+        this.cfv.invalid(this.cfv.newEmail, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
+        return false;
+      }
+  
+      if (!EmailValidator.validate(this.newEmail)) {
+        this.cfv.invalid(this.cfv.newEmail, ErrorTypeHelper.GLOBAL_ERROR.invalidEmail.code);
+        return false;
+      }
+
+      if (this.newPassword == '' || this.newPassword == undefined) {
+        this.cfv.invalid(this.cfv.newPassword, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
+        return false;
+      }
+
+      if (!environment.passwordRegex.test(this.newPassword)) {
+        this.cfv.invalid(this.cfv.newPassword, ErrorTypeHelper.GLOBAL_ERROR.toWeakPassword.code);
+        return false;
+      }
+
+      this.loginRequest.email = this.newEmail;
+      this.loginRequest.password = this.newPassword;
     }
 
     this.login(!this.isNewAccount);
@@ -90,7 +126,7 @@ export class SigninComponent implements OnInit {
       },
       (error: any) => {
         if (error.code === "auth/email-already-in-use") {
-          this.cfv.invalid(this.cfv.email, ErrorTypeHelper.CREATE_USER_ERROR.emailAlreadyUsed.code);
+          this.cfv.invalid(this.cfv.newEmail, ErrorTypeHelper.CREATE_USER_ERROR.emailAlreadyUsed.code);
         } else if (error.code === "auth/user-not-found") {
           this.cfv.invalid(this.cfv.email, ErrorTypeHelper.FORGET_PASSWORD_ERROR.unknownEmail.code);
         } else {
