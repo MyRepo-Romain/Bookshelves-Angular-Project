@@ -23,7 +23,6 @@ export class SigninComponent implements OnInit {
   public cfv: CustomFormValid;
   public user: UserResponse;
   public isNewAccount: boolean;
-  public errorMessage: string;
   public newEmail: string;
   public newPassword: string;
 

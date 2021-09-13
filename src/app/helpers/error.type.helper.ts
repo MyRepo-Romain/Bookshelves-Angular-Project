@@ -25,6 +25,9 @@ export class ErrorTypeHelper {
 
     static SNACK_BAR_INFORMATION = class {
         public static deleteAccount: any = { code: 'delete_account', msg: 'Votre compte a bien été supprimé' };
+        public static updateUserFail: any = { code: 'update_user_fail', msg: 'Suite à une erreur de réseau votre compte n\'as pas pus etre modifié' };
+        public static updatePasswordFail: any = { code: 'update_password_fail', msg: 'Suite à une erreur de réseau votre mot de passe n\'as pas pus etre modifié' };
+        public static updateMailFail: any = { code: 'update_mail_fail', msg: 'Suite à une erreur de réseau votre email n\'as pas pus etre modifié' };
     };
 
     static SNACK_BAR_DELETE = class {

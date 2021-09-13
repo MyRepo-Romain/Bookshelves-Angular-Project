@@ -13,8 +13,6 @@ export class CustomFormValid {
     }
 
     public invalid(element: any, errorCode: string) {
-        console.log(element)
-        console.log(errorCode)
         if (element != undefined) {
             const error = element.errors.find((e: { code: string; }) => e.code === errorCode);
             const errorMessage = error === undefined ? 'invalid' : error.msg;
@@ -24,7 +22,6 @@ export class CustomFormValid {
     }
 
     public valid(element: any) {
-        console.log(element)
         if (element != undefined) {
             element.ac.setErrors(null);
             element.ac.markAsTouched();

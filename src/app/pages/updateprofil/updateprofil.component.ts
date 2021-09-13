@@ -12,6 +12,7 @@ import { UserUpdateRequest } from 'app/models/request/userUpdateRequest';
 import { UserResponse } from 'app/models/response/userResponse';
 import { LoginRequest } from 'app/models/request/loginRequest';
 import { environment } from 'environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-updateprofil',
@@ -28,7 +29,6 @@ export class UpdateProfilComponent implements OnInit {
 
   public cfv: CustomFormValid;
 
-  public errorMessage: string;
   public newEmail: string;
   public confirmEmail: string;
   public newPassword: string;
@@ -39,7 +39,7 @@ export class UpdateProfilComponent implements OnInit {
   public password: boolean;
   public email: boolean;
 
-  constructor(private session: AngularSession, public fb: FormBuilder, private firestoreService: FirestoreService, private router: Router) {
+  constructor(private session: AngularSession, public fb: FormBuilder, private firestoreService: FirestoreService, private router: Router, public snackBar: MatSnackBar) {
     this.isLoaded = new Subject();
     this.userResponse = new UserResponse(undefined);
     this.userUpdateRequest = new UserUpdateRequest(undefined);
@@ -136,12 +136,14 @@ export class UpdateProfilComponent implements OnInit {
         if (!EmailValidator.validate(this.newEmail)) {
           this.cfv.invalid(this.cfv.newEmail, ErrorTypeHelper.GLOBAL_ERROR.invalidEmail.code);
           return false;
-      }
+        }
 
         if (this.confirmEmail == undefined || this.confirmEmail == '') {
           this.cfv.invalid(this.cfv.confirmEmail, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
           isValid = false;
-        } else if (this.confirmEmail != this.newEmail) {
+        }
+        
+        if (this.confirmEmail != this.newEmail) {
           this.cfv.invalid(this.cfv.confirmEmail, ErrorTypeHelper.GLOBAL_ERROR.wrongConfirmEmail.code);
           isValid = false;
         }
@@ -193,7 +195,7 @@ export class UpdateProfilComponent implements OnInit {
         this.router.navigate(['profil']);
       },
       (error) => {
-        this.errorMessage = "La modification a échouée";
+        this.snackBar.open(ErrorTypeHelper.SNACK_BAR_INFORMATION.updateUserFail.msg, 'OK');
       });
   }
 
@@ -205,7 +207,10 @@ export class UpdateProfilComponent implements OnInit {
       },
       (error) => {
         if (error.code === "auth/email-already-in-use") {
-          this.cfv.invalid(this.cfv.email, ErrorTypeHelper.CREATE_USER_ERROR.emailAlreadyUsed.code);
+          this.cfv.invalid(this.cfv.newEmail, ErrorTypeHelper.CREATE_USER_ERROR.emailAlreadyUsed.code);
+          this.cfv.invalid(this.cfv.confirmEmail, ErrorTypeHelper.CREATE_USER_ERROR.emailAlreadyUsed.code);
+        } else {
+          this.snackBar.open(ErrorTypeHelper.SNACK_BAR_INFORMATION.updateMailFail.msg, 'OK');
         }
       });
   }
@@ -217,7 +222,7 @@ export class UpdateProfilComponent implements OnInit {
         this.router.navigate(['signin']);
       },
       (error) => {
-        this.errorMessage = "La modification a échouée";
+        this.snackBar.open(ErrorTypeHelper.SNACK_BAR_INFORMATION.updatePasswordFail.msg, 'OK');
       }
     );
   }
