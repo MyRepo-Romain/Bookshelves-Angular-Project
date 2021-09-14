@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { ResizedEvent } from 'angular-resize-event';
 import { Observable } from 'rxjs/Observable';
-import { environment } from 'environments/environment';
 import { AngularSession } from 'app/angular.session';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,34 +13,45 @@ import { AngularSession } from 'app/angular.session';
 
 export class AppComponent implements OnInit{
 
-  @ViewChild('sidenav')
-  public menu: MatSidenav;
+  @ViewChild(MatSidenav)
+  public sidenav: MatSidenav;
+
+  @Input()
+  public opened: boolean;
+
+  public sidenavStatus: BehaviorSubject<string>;
   public isLoggedIn: Observable<boolean>;
 
-  constructor(private session: AngularSession) { }
-
-  onResized(event: ResizedEvent) {
-    if (this.menu != undefined) {
-        if (event.newWidth < environment.smartphoneWidth) {
-            this.menu.mode = 'over';
-        } else {
-            this.menu.mode = 'side';
-        }
-        this.session.toogleMenuVisibility(true);
-    }
-}
+  constructor(private session: AngularSession, public observer: BreakpointObserver) {
+    this.sidenavStatus = new BehaviorSubject<string>(undefined)
+    this.opened = false;
+  }
 
   ngOnInit() {
     this.isLoggedIn = this.session.isLoggedIn;
-    this.session.isMenuVisible.subscribe(() => {
-      if (this.menu != undefined) {
-          this.menu.opened = this.session.menuVisibilityValue;
-          this.menu.openedChange.subscribe((value) => {
-              this.session.menuVisibilityValue = value;
-          });
-      }
-  });
-
   }
 
+  ngAfterViewInit() {
+    this.isLoggedIn.subscribe( res => {
+      if (res) {
+        setTimeout(() => {
+          this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+            if (res.matches) {
+              this.sidenav.mode = "over";
+              this.sidenavStatus.next(this.sidenav.mode)
+              this.sidenav.close();
+            } else {
+              this.sidenav.mode = "side";
+              this.sidenavStatus.next(this.sidenav.mode)
+              this.sidenav.open();
+            }
+          })
+        }, 0)
+      }
+    })
+  }
+
+  toggle() {
+    this.opened = !this.opened
+  }
 }

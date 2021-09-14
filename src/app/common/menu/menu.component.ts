@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,10 +9,22 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-    constructor(public router: Router) {
+    @Output()
+    public closeSidenavEvent: EventEmitter<any>;
+    
+    constructor(public router: Router, public observer: BreakpointObserver) {
+        this.closeSidenavEvent = new EventEmitter();
     }
 
     ngOnInit() {
-        
+
+    }
+
+    closeSidenav() {
+        this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+            if (res.matches) {
+                this.closeSidenavEvent.emit(null);
+            }
+        })
     }
 }

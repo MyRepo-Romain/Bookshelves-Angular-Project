@@ -1,13 +1,13 @@
-<app-header></app-header>
+<app-header [sidenavStatus]="sidenavStatus" (closeSidenavEvent)="toggle()"></app-header>
 
 <!-- Anonymous user case -->
 <router-outlet *ngIf="(isLoggedIn | async) === false">
 </router-outlet>
 
 <!-- Identified & logged user case -->
-<mat-sidenav-container (resized)="onResized($event)" *ngIf="isLoggedIn | async">
-    <mat-sidenav #sidenav class="mat-elevation-z4" mode="side" opened="true" *ngIf="isLoggedIn | async">
-        <app-menu></app-menu>
+<mat-sidenav-container *ngIf="isLoggedIn | async">
+    <mat-sidenav #sidenav [opened]="opened" class="mat-elevation-z4" *ngIf="isLoggedIn | async" (disableClose)=true>
+        <app-menu (closeSidenavEvent)="toggle()"></app-menu>
     </mat-sidenav>
     <div class="main-container">
         <router-outlet></router-outlet>

@@ -2,11 +2,11 @@
 
     <h2 matSubheader> Ma bibliothèque </h2>
 
-    <a mat-list-item routerLink="/books" routerLinkActive="active">
+    <a mat-list-item routerLink="/books" routerLinkActive="active" (click)="closeSidenav()">
         <mat-icon>book</mat-icon>Livres
     </a>
     
-    <a mat-list-item routerLink="/mangas" routerLinkActive="active">
+    <a mat-list-item routerLink="/mangas" routerLinkActive="active" (click)="closeSidenav()">
         <mat-icon>photo_album</mat-icon>Mangas
     </a>
 
@@ -14,7 +14,7 @@
 
     <h2 matSubheader>Divertissements</h2>
 
-    <a mat-list-item routerLink="/magazines" routerLinkActive="active">
+    <a mat-list-item routerLink="/magazines" routerLinkActive="active" (click)="closeSidenav()">
         <mat-icon>import_contacts</mat-icon>Magazines
     </a>
 
@@ -22,7 +22,7 @@
 
     <h2 matSubheader>Presses</h2>
 
-    <a mat-list-item routerLink="/newspapers" routerLinkActive="active">
+    <a mat-list-item routerLink="/newspapers" routerLinkActive="active" (click)="closeSidenav()">
         <mat-icon>local_library</mat-icon>Journaux
     </a>
 
