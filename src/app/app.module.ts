@@ -16,7 +16,6 @@ import { AngularSession } from 'app/angular.session';
 import { AppComponent } from 'app/app.component';
 import { SigninComponent } from 'app/pages/signin/signin.component';
 import { BookListComponent } from 'app/pages/book-list/book-list.component';
-import { HeaderComponent } from 'app/common/header/header.component';
 import { FileDownloaderComponent } from 'app/common/component/file-downloader/file-downloader.component';
 import { NewBookDialogComponent } from 'app/common/dialog/upsert/new-book/new.book.dialog';
 import { FooterCollapseComponent } from 'app/common/footer-collapse/footer-collapse.component';
@@ -33,6 +32,7 @@ import { DateSelectComponent } from 'app/common/component/date-picker/date-picke
 import { NewMangaDialogComponent } from './common/dialog/upsert/new-manga/new.manga.dialog';
 import { DeleteUserAccountDialogComponent } from './common/dialog/delete-user-account/delete.user.account.dialog';
 import { SendEmailtDialogComponent } from './common/dialog/send-email/send.email.dialog';
+import { HeaderComponent } from './common/header/header.component';
 
 @NgModule({
   declarations: [

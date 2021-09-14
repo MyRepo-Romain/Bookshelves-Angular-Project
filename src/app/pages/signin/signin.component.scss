@@ -1,73 +1,44 @@
 @import "../../../global-variables.scss";
 
-.background-signin {
-  background: url(../../../assets/img/signIn_background.jpg);
-  background-position: 0, 0;
-  background-repeat: no-repeat;
-  background-size: 80%;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.login-card {
-  position: relative;
-  right: 0;
-  top: 0;
-  bottom: 0;
-
-  & > .mat-card {
-    float: right;
-    width: 500px;
-    min-width: 500px;
-    min-height: 100vh;
-    padding: 52px;
-
-    & > .signin-content {
-      margin-top: 50%;
-
-      .connect {
-        text-decoration: none;
-      }
-
-      .forgot-email a:hover{
-        color: orange;
-      }
-    }
+@media screen and (min-width: 0px) {
+  
+  .background-signin {
+    background: url(../../../assets/img/signIn_background.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin: 0 !important;
+    padding: 0 !important;
   }
-}
 
-.mat-card-title {
-  margin-bottom: 18px;
-}
-
-@media screen and (min-width: 0px) and (max-width: 599px) {
-  .mat-card {
-    width: 100% !important;
-    min-width: 100% !important;
-    border-radius: 0px !important;
-
-    & > .signin-content {
-      margin-top: 0 !important;
-    }
-  }
-}
-
-.resend-activate {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin-bottom: 0px;
-
-  & > a {
+  .login-card {
+    position: relative;
+    right: 0;
+    top: 250px;
     bottom: 0;
-    left: 8px;
-    font-size: 12px;
+
+    & >   .mat-card {
+      width: 100% !important;
+      min-width: 100% !important;
+      border-radius: 0px !important;
+      padding: 52px;
+
+      & > .signin-content {
+        margin-top: 0 !important;
+
+        .connect {
+          text-decoration: none;
+        }
+
+        .forgot-email a:hover{
+          color: orange;
+        }
+      }
+    }
   }
+
 }
