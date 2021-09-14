@@ -257,8 +257,9 @@ export class FirestoreService {
     saveManga(mangaRequest: MangaRequest, userId: string) {
       return this.firestore.collection("manga").add({
         title: mangaRequest.title,
+        author: mangaRequest.author,
         photo: mangaRequest.photo,
-        page: mangaRequest.tome,
+        tome: mangaRequest.tome,
         description: mangaRequest.description,
         theme: mangaRequest.genre,
         userId: userId

@@ -78,21 +78,21 @@
   }
   
   .material-icons {
-    color: #fff;
+    color: $white;
   }
   
   .color {
-    color: #fff;
+    color: $white;
   
     ::ng-deep.mat-form-field-underline, ::ng-deep.mat-form-field-ripple {
       /*change color of underline*/
-      background-color: #fff !important;
+      background-color: $white !important;
     }
   
     ::ng-deep .mat-form-field-label {
       /*change color of label*/
       font-size: 16px !important;
-      color: #fff !important;
+      color: $white !important;
     }
   
   }
@@ -177,20 +177,20 @@
   }
   
   .material-icons {
-    color: #fff;
+    color: $white;
   }
   
   .color {
   
     ::ng-deep.mat-form-field-underline, ::ng-deep.mat-form-field-ripple {
       /*change color of underline*/
-      background-color: #fff !important;
+      background-color: $white !important;
     }
   
     ::ng-deep .mat-form-field-label {
       /*change color of label*/
       font-size: 16px !important;
-      color: #fff !important;
+      color: $white !important;
     }
   
   }

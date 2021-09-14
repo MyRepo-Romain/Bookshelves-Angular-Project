@@ -47,8 +47,9 @@
 
   .background-signin {
     background: url(../../../assets/img/signIn_background.jpg);
+    background-position: 0, 0;
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     position: absolute;
     top: 0px;
     bottom: 0px;
@@ -57,24 +58,38 @@
     margin: 0 !important;
     padding: 0 !important;
   }
-
+  
   .login-card {
     position: relative;
     right: 0;
-    top: 250px;
+    top: 0;
     bottom: 0;
-
-    & >   .mat-card {
-      width: 100% !important;
-      min-width: 100% !important;
-      border-radius: 0px !important;
+  
+    & > .mat-card {
+      background-color: $background-color-signin-card !important;
+      float: right;
+      width: 500px;
+      min-width: 500px;
+      min-height: 100vh;
       padding: 52px;
-
+  
       & > .signin-content {
-        margin-top: 0 !important;
-
+        margin-top: 50%;
+  
+        & > .signup-logo {
+          display: block;
+          max-width: 250px;
+          margin: auto;
+          margin-bottom: 40px;
+        }
+  
         .connect {
-          text-decoration: none;
+          background-color: $primary-color;
+          font-family: "Source Sans Pro", "Adobe Garamond Pro", "Times new roman", "Arial";
+        }
+      
+        .forgot-email .mat-flat-button{
+          background-color: $white !important;
         }
 
         .forgot-email a:hover{

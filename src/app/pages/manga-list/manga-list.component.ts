@@ -43,6 +43,7 @@ export class MangaListComponent implements OnInit {
     this.firestoreService.getAllMangas().subscribe((querySnapshot) => {
       this.mangaCollection = querySnapshot.docs.map(dx => new MangaResponse(dx)).filter(x => x.userId == this.userId);
       this.dataSource.data = this.mangaCollection;
+      console.log(this.mangaCollection)
     });
   }
 
