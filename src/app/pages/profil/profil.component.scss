@@ -1,30 +1,81 @@
-.container{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+@media screen and (min-width: 0px) and (max-width: 598px) {
+  .container{
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 20%;
+    left: 0;
+  }
+  
+  .connect {
+    text-decoration: none;
+  }
+  
+  .mat-card-title {
+    margin-bottom: 18px;
+  }
+  
+  img {
+    max-height: 120px;
+    max-width: 80px;
+  }
+  
+  mat-card-content {
+    width: 100%;
+  }
+  
+  mat-card-title {
+    font-size: 22px;
+  }
+  
+  mat-card {
+    background-color: #f4f4f4;
+  }
+
+  .mat-flat-button {
+    line-height: 1.5;
+    white-space: normal !important;
+  }
+
+  a {
+    max-width: 120px;
+    height: 35px;
+    font-size: 10px;
+  }
+
 }
 
-.connect {
-  text-decoration: none;
-}
+@media screen and (min-width: 599px) {
 
-.mat-card-title {
-  margin-bottom: 18px;
-}
+  .container{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .connect {
+    text-decoration: none;
+  }
+  
+  .mat-card-title {
+    margin-bottom: 18px;
+  }
+  
+  img {
+    max-height: 200px;
+  }
+  
+  mat-card-content {
+    width: 80%;
+    margin: 50px auto;
+  }
+  
+  mat-card-title {
+    font-size: 32px;
+  }
+  
+  mat-card {
+    background-color: #f4f4f4;
+  }
 
-img {
-  max-height: 200px;
-}
-
-mat-card-content {
-  width: 80%;
-  margin: 50px auto;
-}
-
-mat-card-title {
-  font-size: 32px;
-}
-
-mat-card {
-  background-color: #f4f4f4;
 }

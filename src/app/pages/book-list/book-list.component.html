@@ -7,7 +7,7 @@
   <input matInput #input placeholder="Rechercher" (keyup)="filter(input.value)">
 </mat-form-field>
 
-<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 table-responsive-sm">
 
       <!-- genre Column -->
       <ng-container matColumnDef="genre">

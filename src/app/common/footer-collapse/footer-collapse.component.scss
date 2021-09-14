@@ -1,11 +1,30 @@
-// @import "./../../../global-variables.scss";
+@media screen and (min-width: 0px) and (max-width: 598px) {
+  .footer-container {
+    height: 100px;
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .footer-icon {
+    height: 100%;
+  }
 
-.footer-container {
-  height: 100px;
-  margin-top: 50px;
-  width: 100%;
+  .material-icons {
+    font-size: 20px;
+  }
+  
 }
 
-.footer-icon {
-  height: 100%;
+@media screen and (min-width: 599px) {
+  
+  .footer-container {
+    height: 100px;
+    margin-top: 50px;
+    width: 100%;
+  }
+  
+  .footer-icon {
+    height: 100%;
+  }
+
 }

@@ -1,3 +1,13 @@
-h1 {
-    color: #0b0b0b  !important;
+@media screen and (min-width: 0px) and (max-width: 598px) {
+    h1 {
+        color: #0b0b0b  !important;
+        font-size: 30px;
+    }
 }
+
+@media screen and (min-width: 599px) {
+    h1 {
+        font-size: 38px;
+    }
+}
+
