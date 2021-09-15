@@ -33,6 +33,7 @@ export class UpdateProfilComponent implements OnInit {
   public confirmEmail: string;
   public newPassword: string;
   public confirmPassword: string;
+  public oldPhoto: string;
 
   public newAccount: boolean;
   public information: boolean;
@@ -84,6 +85,7 @@ export class UpdateProfilComponent implements OnInit {
         this.userResponse = new UserResponse(response);
         this.userUpdateRequest = new UserUpdateRequest(this.userResponse);
         this.loginRequest = new LoginRequest(response);
+        this.oldPhoto = response.photoURL;
         this.isLoaded.next(true);
       }
     });
@@ -190,13 +192,18 @@ export class UpdateProfilComponent implements OnInit {
   }
 
   updateUser() {
+    if (this.oldPhoto != undefined && this.oldPhoto != "") {
+      this.firestoreService.deleteFile(this.oldPhoto);
+    }
     this.firestoreService.updateUser(this.userUpdateRequest).then(
       () => {
+        this.oldPhoto = undefined;
         this.router.navigate(['profil']);
       },
       (error) => {
         this.snackBar.open(ErrorTypeHelper.SNACK_BAR_INFORMATION.updateUserFail.msg, 'OK');
       });
+    
   }
 
   updateEmail() {

@@ -43,7 +43,6 @@ export class MangaListComponent implements OnInit {
     this.firestoreService.getAllMangas().subscribe((querySnapshot) => {
       this.mangaCollection = querySnapshot.docs.map(dx => new MangaResponse(dx)).filter(x => x.userId == this.userId);
       this.dataSource.data = this.mangaCollection;
-      console.log(this.mangaCollection)
     });
   }
 
@@ -52,7 +51,7 @@ export class MangaListComponent implements OnInit {
   }
 
   newBook() {
-    const dialogRef = this.dialog.open(NewMangaDialogComponent , { data: { bookResponse: undefined }});
+    const dialogRef = this.dialog.open(NewMangaDialogComponent , { data: { mangaResponse: undefined }});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.initialiazeDataSource();
@@ -61,7 +60,7 @@ export class MangaListComponent implements OnInit {
   }
 
   editManga(entity: MangaResponse) {
-    const dialogRef = this.dialog.open(NewMangaDialogComponent , { data: { bookResponse: entity }});
+    const dialogRef = this.dialog.open(NewMangaDialogComponent , { data: { mangaResponse: entity }});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.initialiazeDataSource();

@@ -28,16 +28,20 @@ export class NewMagazineDialogComponent implements OnInit {
   public cfv: CustomFormValid;
   public newEntity: boolean;
   public userId: string;
-  public isDisabled: boolean = true;
+  public isDisabled: boolean;
+  public oldPhoto: string;
 
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, private router: Router, public dialogRef: MatDialogRef<NewMagazineDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: NewMagazineBag, public dialogService: MatDialog) {
+    this.isDisabled = true;
 
     if (data.magazineResponse != undefined) {
       this.magazineRequest = new MagazineRequest(data.magazineResponse);
+      this.oldPhoto = data.magazineResponse.photo;
       this.newEntity = false;
     } else {
       this.magazineRequest = new MagazineRequest(undefined);
+      this.oldPhoto = undefined;
       this.newEntity = true;
     }
 
@@ -104,9 +108,10 @@ export class NewMagazineDialogComponent implements OnInit {
   }
 
   saveMagazine(update: boolean) {
-    let request = update ? this.firestoreService.updateMagazine(this.magazineRequest) : this.firestoreService.saveMagazine(this.magazineRequest, this.userId);
+    let request = update ?  (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateMagazine(this.magazineRequest)) : this.firestoreService.saveMagazine(this.magazineRequest, this.userId);
     request.then(
       response => {
+        this.oldPhoto = undefined;
         this.dialogRef.close(true);
       },
       (error) => {

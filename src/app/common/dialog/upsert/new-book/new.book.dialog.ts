@@ -28,16 +28,20 @@ export class NewBookDialogComponent implements OnInit {
   public cfv: CustomFormValid;
   public newEntity: boolean;
   public userId: string;
-  public isDisabled: boolean = true;
+  public isDisabled: boolean;
+  public oldPhoto: string;
 
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, private router: Router, public dialogRef: MatDialogRef<NewBookDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: NewBookBag, public dialogService: MatDialog) {
+    this.isDisabled = true;
 
     if (data.bookResponse != undefined) {
       this.bookRequest = new BookRequest(data.bookResponse);
+      this.oldPhoto = data.bookResponse.photo;
       this.newEntity = false;
     } else {
       this.bookRequest = new BookRequest(undefined);
+      this.oldPhoto = undefined;
       this.newEntity = true;
     }
 
@@ -110,9 +114,10 @@ export class NewBookDialogComponent implements OnInit {
   }
 
   saveBook(update: boolean) {
-    let request = update ? this.firestoreService.updateBook(this.bookRequest) : this.firestoreService.saveBook(this.bookRequest, this.userId);
+    let request = update ? (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateBook(this.bookRequest)) : this.firestoreService.saveBook(this.bookRequest, this.userId);
     request.then(
       response => {
+        this.oldPhoto = undefined;
         this.dialogRef.close(true);
       },
       (error) => {

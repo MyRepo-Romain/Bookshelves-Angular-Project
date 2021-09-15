@@ -18,7 +18,7 @@ export class MangaRequest {
             this.photo = data.photo;
             this.tome = data.tome;
             this.description = data.description;
-            this.genre = data.theme;
+            this.genre = data.genre;
         }
     }
 }

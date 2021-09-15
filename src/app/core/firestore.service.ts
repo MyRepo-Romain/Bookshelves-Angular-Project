@@ -261,7 +261,7 @@ export class FirestoreService {
         photo: mangaRequest.photo,
         tome: mangaRequest.tome,
         description: mangaRequest.description,
-        theme: mangaRequest.genre,
+        genre: mangaRequest.genre,
         userId: userId
       }).then(
         () => {
@@ -312,6 +312,7 @@ export class FirestoreService {
             reject();
           },
           () => {
+            console.log('Photo téléchargée avec succes!');
             resolve(uploadFile.snapshot.ref.getDownloadURL());
           }
         );

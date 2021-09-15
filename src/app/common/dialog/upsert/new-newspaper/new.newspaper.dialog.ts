@@ -29,16 +29,20 @@ export class NewNewspaperDialogComponent implements OnInit {
   public cfv: CustomFormValid;
   public newEntity: boolean;
   public userId: string;
-  public isDisabled: boolean = true;
+  public isDisabled: boolean;
+  public oldPhoto: string;
 
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, private router: Router, public dialogRef: MatDialogRef<NewNewspaperDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: NewNewspaperBag, public dialogService: MatDialog) {
+    this.isDisabled = true;
 
     if (data.newspaperResponse != undefined) {
       this.newspaperRequest = new NewspaperRequest(data.newspaperResponse);
+      this.oldPhoto = data.newspaperResponse.photo;
       this.newEntity = false;
     } else {
       this.newspaperRequest = new NewspaperRequest(undefined);
+      this.oldPhoto = undefined;
       this.newEntity = true;
     }
 
@@ -104,9 +108,10 @@ export class NewNewspaperDialogComponent implements OnInit {
   }
 
   saveNewspaper(update: boolean) {
-    let request = update ? this.firestoreService.updateNewspaper(this.newspaperRequest) : this.firestoreService.saveNewspaper(this.newspaperRequest, this.userId);
+    let request = update ?  (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateNewspaper(this.newspaperRequest)) : this.firestoreService.saveNewspaper(this.newspaperRequest, this.userId);
     request.then(
       response => {
+        this.oldPhoto = undefined;
         this.dialogRef.close(true);
       },
       (error) => {

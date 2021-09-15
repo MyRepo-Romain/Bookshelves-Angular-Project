@@ -28,17 +28,21 @@ export class NewMangaDialogComponent implements OnInit {
   public cfv: CustomFormValid;
   public newEntity: boolean;
   public userId: string;
-  public isDisabled: boolean = true;
+  public isDisabled: boolean;
+  public oldPhoto: string;
 
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, private router: Router, public dialogRef: MatDialogRef<NewMangaDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: NewMangaBag, public dialogService: MatDialog) {
+    this.isDisabled = true;
 
     if (data.mangaResponse != undefined) {
-
       this.mangaRequest = new MangaRequest(data.mangaResponse);
+      this.oldPhoto = data.mangaResponse.photo;
+      console.log(this.mangaRequest)
       this.newEntity = false;
     } else {
       this.mangaRequest = new MangaRequest(undefined);
+      this.oldPhoto = undefined;
       this.newEntity = true;
     }
 
@@ -91,7 +95,7 @@ export class NewMangaDialogComponent implements OnInit {
     }
 
     if (this.mangaRequest.genre == undefined || this.mangaRequest.genre == '') {
-      this.cfv.invalid(this.cfv.theme, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
+      this.cfv.invalid(this.cfv.genre, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
@@ -111,9 +115,10 @@ export class NewMangaDialogComponent implements OnInit {
   }
 
   saveManga(update: boolean) {
-    let request = update ? this.firestoreService.updateManga(this.mangaRequest) : this.firestoreService.saveManga(this.mangaRequest, this.userId);
+    let request = update ?  (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateManga(this.mangaRequest)) : this.firestoreService.saveManga(this.mangaRequest, this.userId);
     request.then(
       response => {
+        this.oldPhoto = undefined;
         this.dialogRef.close(true);
       },
       (error) => {
