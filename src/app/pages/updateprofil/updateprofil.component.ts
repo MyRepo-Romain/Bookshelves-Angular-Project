@@ -137,7 +137,7 @@ export class UpdateProfilComponent implements OnInit {
 
         if (!EmailValidator.validate(this.newEmail)) {
           this.cfv.invalid(this.cfv.newEmail, ErrorTypeHelper.GLOBAL_ERROR.invalidEmail.code);
-          return false;
+          isValid = false;
         }
 
         if (this.confirmEmail == undefined || this.confirmEmail == '') {
@@ -163,7 +163,7 @@ export class UpdateProfilComponent implements OnInit {
 
         if (!environment.passwordRegex.test(this.newPassword)) {
           this.cfv.invalid(this.cfv.newPassword, ErrorTypeHelper.GLOBAL_ERROR.toWeakPassword.code);
-          return false;
+          isValid = false;
         }
 
         if (this.confirmPassword == undefined || this.confirmPassword == '') {
@@ -178,7 +178,7 @@ export class UpdateProfilComponent implements OnInit {
 
         if (!environment.passwordRegex.test(this.confirmPassword)) {
           this.cfv.invalid(this.cfv.confirmPassword, ErrorTypeHelper.GLOBAL_ERROR.toWeakPassword.code);
-          return false;
+          isValid = false;
         }
   
         if (isValid) {
