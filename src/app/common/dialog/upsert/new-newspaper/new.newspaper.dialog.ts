@@ -12,6 +12,7 @@ import { NewspaperRequest } from 'app/models/request/newspaperRequest';
 import { DateHelper } from 'app/helpers/date.helper';
 
 interface NewNewspaperBag {
+  // recuperation de l'objet bookResponse envoyer par l'element parent
   newspaperResponse: NewspaperResponse;
 }
 
@@ -25,6 +26,7 @@ export class NewNewspaperDialogComponent implements OnInit {
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
+  // declaration des différentes variables
   public newspaperRequest: NewspaperRequest;
   public cfv: CustomFormValid;
   public newEntity: boolean;
@@ -34,9 +36,11 @@ export class NewNewspaperDialogComponent implements OnInit {
 
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, private router: Router, public dialogRef: MatDialogRef<NewNewspaperDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: NewNewspaperBag, public dialogService: MatDialog) {
+
+    // initialisation des differentes variable
     this.isDisabled = true;
 
-    if (data.newspaperResponse != undefined) {
+    if (data.newspaperResponse !== undefined) {
       this.newspaperRequest = new NewspaperRequest(data.newspaperResponse);
       this.oldPhoto = data.newspaperResponse.photo;
       this.newEntity = false;
@@ -46,8 +50,10 @@ export class NewNewspaperDialogComponent implements OnInit {
       this.newEntity = true;
     }
 
+    // initialisation du form
     this.cfv = new CustomFormValid(fb,
     ['title', 'photo', 'description', 'datePK']);
+    // initialisation des différentes erreurs
     this.cfv.title.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.description.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.photo.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection);
@@ -59,6 +65,7 @@ export class NewNewspaperDialogComponent implements OnInit {
   }
 
   getUser() {
+    // recuperation de l'ID de l'utilisateur
     firebase.auth().onAuthStateChanged(response => {
       if (response) {
         this.userId = response.uid;
@@ -67,14 +74,15 @@ export class NewNewspaperDialogComponent implements OnInit {
   }
 
   fileUrlEventhandler(photo: string) {
-    if (photo != undefined) {
+    // on recupere la photo est on bind sur la request - on active le bouton de de validation
+    if (photo !== undefined) {
       this.newspaperRequest.photo = photo;
       this.isDisabled = false;
     }
   }
 
   public dateSelectedEventHandler(dateSelected: Date) {
-    if (dateSelected != undefined) {
+    if (dateSelected !== undefined) {
         this.newspaperRequest.date = DateHelper.toLocal(dateSelected);
     }
   }
@@ -82,22 +90,26 @@ export class NewNewspaperDialogComponent implements OnInit {
   validate() {
     let isValid = true;
 
-    if (this.newspaperRequest.photo == undefined || this.newspaperRequest.photo == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.newspaperRequest.photo === undefined || this.newspaperRequest.photo === '') {
       this.cfv.invalid(this.cfv.photo, ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection.code);
       isValid = false;
     }
 
-    if (this.newspaperRequest.title == undefined || this.newspaperRequest.title == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.newspaperRequest.title === undefined || this.newspaperRequest.title === '') {
         this.cfv.invalid(this.cfv.title, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         isValid = false;
     }
 
-    if (this.newspaperRequest.description == undefined || this.newspaperRequest.description == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.newspaperRequest.description === undefined || this.newspaperRequest.description === '') {
       this.cfv.invalid(this.cfv.description, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
-    if (this.newspaperRequest.date == undefined) {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.newspaperRequest.date === undefined) {
       this.cfv.invalid(this.cfv.datePK, ErrorTypeHelper.GLOBAL_ERROR.invalidDate.code);
       isValid = false;
     }
@@ -107,8 +119,9 @@ export class NewNewspaperDialogComponent implements OnInit {
     }
   }
 
-  saveNewspaper(update: boolean) {
-    let request = update ?  (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateNewspaper(this.newspaperRequest)) : this.firestoreService.saveNewspaper(this.newspaperRequest, this.userId);
+  saveNewspaper(newEntity: boolean) {
+    // si newEntity est à true c'est une update d'un journal existant sinon on enregistre un nouveau journal
+    let request = newEntity ?  (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateNewspaper(this.newspaperRequest)) : this.firestoreService.saveNewspaper(this.newspaperRequest, this.userId);
     request.then(
       response => {
         this.oldPhoto = undefined;

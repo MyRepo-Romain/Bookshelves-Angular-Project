@@ -21,6 +21,8 @@ import { NewspaperResponse } from 'app/models/response/newspaperResponce';
   ]
 })
 export class NewspaperListComponent implements OnInit {
+
+  // initialisation des colonnes de la table
   public displayedColumns: string[] = [
     'date', 'title'
   ];
@@ -39,8 +41,9 @@ export class NewspaperListComponent implements OnInit {
   }
 
   initialiazeDataSource() {
+    // initialisation des data en fonction du l'id de l'utilisateur
     this.firestoreService.getAllNewspapers().subscribe((querySnapshot) => {
-      this.newspaperCollection = querySnapshot.docs.map(dx => new NewspaperResponse(dx)).filter(x => x.userId == this.userId);
+      this.newspaperCollection = querySnapshot.docs.map(dx => new NewspaperResponse(dx)).filter(x => x.userId === this.userId);
       this.dataSource.data = this.newspaperCollection;
     });
   }

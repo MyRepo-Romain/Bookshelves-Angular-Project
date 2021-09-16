@@ -21,6 +21,8 @@ import { MagazineResponse } from 'app/models/response/magazineResponce';
   ]
 })
 export class MagazineListComponent implements OnInit {
+
+  // initialisation des colonnes de la table
   public displayedColumns: string[] = [
     'theme', 'title'
   ];
@@ -39,8 +41,9 @@ export class MagazineListComponent implements OnInit {
   }
 
   initialiazeDataSource() {
+    // initialisation des data en fonction du l'id de l'utilisateur
     this.firestoreService.getAllMagazines().subscribe((querySnapshot) => {
-      this.magazineCollection = querySnapshot.docs.map(dx => new MagazineResponse(dx)).filter(x => x.userId == this.userId);
+      this.magazineCollection = querySnapshot.docs.map(dx => new MagazineResponse(dx)).filter(x => x.userId === this.userId);
       this.dataSource.data = this.magazineCollection;
     });
   }

@@ -30,9 +30,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    // je recupere le status de la sidenav pour determiner si je la passe en "side" ou "over" en fonction de la taille de l'ecran
     this.sidenavStatus.subscribe( res => {
       this.sidenavMode = res;
-    })
+    });
       this.isLoggedIn = this.session.isLoggedIn;
       this.isLoggedIn.subscribe(value => {
         if (value) {

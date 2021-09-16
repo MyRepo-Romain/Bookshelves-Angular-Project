@@ -4,7 +4,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { CustomFormValid } from 'app/core/custom.form.valid';
 
 @Component({
-    selector: 'date-picker',
+    selector: 'app-date-picker',
     templateUrl: './date-picker.component.html',
     styleUrls: ['./date-picker.component.scss'],
     providers: []
@@ -44,16 +44,16 @@ export class DateSelectComponent implements OnInit {
 
     redirectClick() {
         let root = document.getElementById('dpk');
-        if (root != undefined) {
+        if (root !== undefined) {
             let button = root.firstElementChild as HTMLElement;
-            if (button != undefined) {
+            if (button !== undefined) {
                 button.click();
             }
         }
     }
 
     initDateSelect() {
-        this.dateCtrl.setValue(this.dateSelected != undefined ? this.dateSelected : undefined);
+        this.dateCtrl.setValue(this.dateSelected !== undefined ? this.dateSelected : undefined);
     }
 
     dateChange(dateSelectedNow: MatDatepickerInputEvent<Date>) {

@@ -7,7 +7,7 @@ export interface ActionConfirmed {
 }
 
 @Component({
-    selector: 'footer-collapse',
+    selector: 'app-footer-collapse',
     templateUrl: './footer-collapse.component.html',
     styleUrls: ['./footer-collapse.component.scss']
 })
@@ -33,13 +33,13 @@ export class FooterCollapseComponent {
     }
 
     delete() {
-        if (this.entity != undefined) {
+        if (this.entity !== undefined) {
             this.action.emit({ remove: true, edit: false, entity: this.entity });
         }
     }
 
     edit() {
-        if (this.entity != undefined) {
+        if (this.entity !== undefined) {
             this.action.emit({ remove: false, edit: true, entity: this.entity });
         }
     }

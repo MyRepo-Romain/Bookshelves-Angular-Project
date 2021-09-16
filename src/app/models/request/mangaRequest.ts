@@ -10,7 +10,7 @@ export class MangaRequest {
 
     public constructor(data: any) {
         this.photo = '';
-        if (data != undefined) {
+        if (data !== undefined) {
             this.id = data.id;
             this.author = data.author;
             this.userId = data.userId;

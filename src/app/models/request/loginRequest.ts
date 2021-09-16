@@ -3,7 +3,7 @@ export class LoginRequest {
     public password: string;
 
     constructor(data: any) {
-        if (data != undefined) {
+        if (data !== undefined) {
             this.email = data.email;
             this.password = data.password;
         }

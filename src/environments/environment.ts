@@ -13,6 +13,7 @@ export const environment = {
     appId: "1:75171728316:web:7ddffa582c5d604ba0b9b9"
   },
   smartphoneWidth: 734,
+  // regex qui defini le format du mot de passe => il doit contenir au moins 1 majuscule, 1 minuscule, 1 chiffre et un caractere spéciale avec une longueur minimum de 8
   passwordRegex: new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-+])(?!.*?[\s]).{8,}$/)
 
 };

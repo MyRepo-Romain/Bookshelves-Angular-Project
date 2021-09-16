@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from 'app/core/firestore.service';
@@ -22,6 +22,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class BookListComponent implements OnInit {
 
+  // initialisation des colonnes de la table
   public displayedColumns: string[] = [
     'genre', 'title', 'author'
   ];
@@ -40,8 +41,9 @@ export class BookListComponent implements OnInit {
   }
 
   initialiazeDataSource() {
+    // initialisation des data en fonction du l'id de l'utilisateur
     this.firestoreService.getAllBooks().subscribe((querySnapshot) => {
-    this.bookCollection = querySnapshot.docs.map(dx => new BookResponse(dx)).filter(x => x.userId == this.userId);
+    this.bookCollection = querySnapshot.docs.map(dx => new BookResponse(dx)).filter(x => x.userId === this.userId);
     this.dataSource.data = this.bookCollection;
     });
   }

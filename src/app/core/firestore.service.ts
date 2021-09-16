@@ -32,14 +32,14 @@ export class FirestoreService {
     return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
     .then(() => {
       return firebase.auth().createUserWithEmailAndPassword(loginRequest.email, loginRequest.password);
-    })
+    });
   }
 
   signInUser(loginRequest: LoginRequest) {
     return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
     .then(() => {
       return firebase.auth().signInWithEmailAndPassword(loginRequest.email, loginRequest.password);
-    })
+    });
   }
 
   signOutUser() {
@@ -79,7 +79,7 @@ export class FirestoreService {
 
 
     deleteUserAccount(userPhoto: string) {
-      if (userPhoto != undefined || userPhoto != null) {
+      if (userPhoto !== undefined || userPhoto !== null) {
         firebase.storage().refFromURL(userPhoto).delete();
       }
       return firebase.auth().currentUser.delete();

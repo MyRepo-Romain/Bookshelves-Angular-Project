@@ -21,6 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UpdateProfilComponent implements OnInit {
 
+  // création des différentes variables necessaires
   public isLoaded: Subject<boolean>;
 
   public userResponse: UserResponse;
@@ -41,6 +42,7 @@ export class UpdateProfilComponent implements OnInit {
   public email: boolean;
 
   constructor(private session: AngularSession, public fb: FormBuilder, private firestoreService: FirestoreService, private router: Router, public snackBar: MatSnackBar) {
+    // initialisation des variables
     this.isLoaded = new Subject();
     this.userResponse = new UserResponse(undefined);
     this.userUpdateRequest = new UserUpdateRequest(undefined);
@@ -53,8 +55,10 @@ export class UpdateProfilComponent implements OnInit {
     this.password = false;
     this.email = false;
 
+    // création des forms
     this.cfv = new CustomFormValid(fb, ['displayName', 'photo', 'newEmail', 'confirmEmail', 'newPassword', 'confirmPassword']);
 
+    // initialisation des erreurs
     this.cfv.displayName.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.photo.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection);
 
@@ -82,6 +86,7 @@ export class UpdateProfilComponent implements OnInit {
   getUser() {
     firebase.auth().onAuthStateChanged(response => {
       if (response) {
+        // on recupere les info de l'utilisateur et on remplie les différentes variables avec les données
         this.userResponse = new UserResponse(response);
         this.userUpdateRequest = new UserUpdateRequest(this.userResponse);
         this.loginRequest = new LoginRequest(response);
@@ -92,109 +97,126 @@ export class UpdateProfilComponent implements OnInit {
   }
 
   fileUrlEventhandler(photo: string) {
-    if (photo != undefined) {
+    if (photo !== undefined) {
       this.userUpdateRequest.photoURL = photo;
     }
   }
 
-  modifyAccount(modifiyId:number) {
-    switch(modifiyId) {
+  modifyAccount(modifiyId: number) {
+    // switch case qui permet la navigation dans le menu des option du compte
+    switch (modifiyId) {
       case 1: this.information = !this.information; this.email = false; this.password = false;
-        break;
+      break;
       case 2: this.information = false; this.email = !this.email; this.password = false;
-        break;
+      break;
       case 3: this.information = false; this.email = false; this.password = !this.password;
-        break;
+      break;
       default: this.information = false; this.email = false; this.password = false;
-        break;
+      break;
     }
   }
 
-  validate(validateId:number) {
+  validate(validateId: number) {
+    // switch case qui permet de valider chaque champs en fonction du menu selectionné
     let isValid = true;
 
-    switch(validateId) {
+    switch (validateId) {
       case 1:
-        if (this.userUpdateRequest.photoURL == undefined || this.userUpdateRequest.photoURL == '') {
+        // on verifie que le champs n'est pas vide ou undefined
+        if (this.userUpdateRequest.photoURL === undefined || this.userUpdateRequest.photoURL === '') {
           this.cfv.invalid(this.cfv.photo, ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection.code);
           isValid = false;
         }
-  
-        if (this.userUpdateRequest.displayName == undefined || this.userUpdateRequest.displayName == '') {
+
+        // on verifie que le champs n'est pas vide ou undefined
+        if (this.userUpdateRequest.displayName === undefined || this.userUpdateRequest.displayName === '') {
           this.cfv.invalid(this.cfv.displayName, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
           isValid = false;
         }
-  
+
         if (isValid) {
           this.updateUser();
         }
-        break;
+      break;
       case 2:
-        if (this.newEmail == undefined || this.newEmail == '') {
+        // on verifie que le champs n'est pas vide ou undefined
+        if (this.newEmail === undefined || this.newEmail === '') {
           this.cfv.invalid(this.cfv.newEmail, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
           isValid = false;
         }
 
+        // on verifie que l'email correspond bien au standard d'ecriture
         if (!EmailValidator.validate(this.newEmail)) {
           this.cfv.invalid(this.cfv.newEmail, ErrorTypeHelper.GLOBAL_ERROR.invalidEmail.code);
           isValid = false;
         }
 
-        if (this.confirmEmail == undefined || this.confirmEmail == '') {
+        // on verifie que le champs n'est pas vide ou undefined
+        if (this.confirmEmail === undefined || this.confirmEmail === '') {
           this.cfv.invalid(this.cfv.confirmEmail, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
           isValid = false;
         }
-        
-        if (this.confirmEmail != this.newEmail) {
+
+        // on verifie que les deux champs sont identiques
+        if (this.confirmEmail !== this.newEmail) {
           this.cfv.invalid(this.cfv.confirmEmail, ErrorTypeHelper.GLOBAL_ERROR.wrongConfirmEmail.code);
           isValid = false;
         }
-        
+
         if (isValid) {
+          // si tout est valide j'associe le mail à la request
           this.loginRequest.email = this.confirmEmail;
           this.updateEmail();
         }
-        break;
-      case 3:     
-        if (this.newPassword == undefined || this.newPassword == '') {
+      break;
+      case 3:
+        // on verifie que le champs n'est pas vide ou undefined
+        if (this.newPassword === undefined || this.newPassword === '') {
           this.cfv.invalid(this.cfv.newPassword, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
           isValid = false;
         }
 
+        // on verifie que le mot de passe correspond bien à la regex etablie dans les variables d'environnements
         if (!environment.passwordRegex.test(this.newPassword)) {
           this.cfv.invalid(this.cfv.newPassword, ErrorTypeHelper.GLOBAL_ERROR.toWeakPassword.code);
           isValid = false;
         }
 
-        if (this.confirmPassword == undefined || this.confirmPassword == '') {
+        // on verifie que le champs n'est pas vide ou undefined
+        if (this.confirmPassword === undefined || this.confirmPassword === '') {
           this.cfv.invalid(this.cfv.confirmPassword, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
           isValid = false;
         }
-        
-        if (this.confirmPassword != this.newPassword) {
+
+        // on verifie que les deux champs sont identiques
+        if (this.confirmPassword !== this.newPassword) {
           this.cfv.invalid(this.cfv.confirmPassword, ErrorTypeHelper.GLOBAL_ERROR.wrongConfirmPassword.code);
           isValid = false;
         }
 
+        // on verifie que le mot de passe correspond bien à la regex etablie dans les variables d'environnements
         if (!environment.passwordRegex.test(this.confirmPassword)) {
           this.cfv.invalid(this.cfv.confirmPassword, ErrorTypeHelper.GLOBAL_ERROR.toWeakPassword.code);
           isValid = false;
         }
-  
+
         if (isValid) {
+          // si tout est valide j'associe le mot de passe à la request
           this.loginRequest.password = this.confirmPassword;
           this.updatePassword();
         }
-        break;
+      break;
       default: isValid = false;
-        break;
+      break;
     }
   }
 
   updateUser() {
-    if (this.oldPhoto != undefined && this.oldPhoto != "") {
+    // suppression de l'ancienne photo
+    if (this.oldPhoto !== undefined && this.oldPhoto !== "") {
       this.firestoreService.deleteFile(this.oldPhoto);
     }
+    // update du profil
     this.firestoreService.updateUser(this.userUpdateRequest).then(
       () => {
         this.oldPhoto = undefined;
@@ -203,10 +225,11 @@ export class UpdateProfilComponent implements OnInit {
       (error) => {
         this.snackBar.open(ErrorTypeHelper.SNACK_BAR_INFORMATION.updateUserFail.msg, 'OK');
       });
-    
+
   }
 
   updateEmail() {
+    // update du mail
     this.firestoreService.updateEmail(this.loginRequest.email).then(
       () => {
         this.router.navigate(['updateprofil']);
@@ -223,6 +246,7 @@ export class UpdateProfilComponent implements OnInit {
   }
 
   updatePassword() {
+    // update du mot de passe
     this.firestoreService.updatePassword(this.loginRequest.password).then(
       () => {
         this.session.clear();

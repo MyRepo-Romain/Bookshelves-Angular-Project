@@ -1,4 +1,4 @@
-<mat-form-field [floatLabel]="showFloatLabel == false ? 'never' : 'auto'" [ngClass]="{'full-width': fullWidth}">
+<mat-form-field [floatLabel]="showFloatLabel === false ? 'never' : 'auto'" [ngClass]="{'full-width': fullWidth}">
     <mat-label>Choisissez une date</mat-label>
     <input matInput [ngClass]="disabled ? 'nocursor' : 'cursor'" [matDatepicker]="DatePicker" (click)="redirectClick()" (dateChange)="dateChange($event)" [formControl]="dateCtrl" [readonly]="true">
     <mat-datepicker-toggle id="dpk" [for]="DatePicker" matSuffix [disabled]="disabled"></mat-datepicker-toggle>

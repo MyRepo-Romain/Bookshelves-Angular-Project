@@ -11,6 +11,7 @@ import { MangaResponse } from 'app/models/response/mangaResponse';
 import { MangaRequest } from 'app/models/request/mangaRequest';
 
 interface NewMangaBag {
+  // recuperation de l'objet mangaResponse envoyer par l'element parent
   mangaResponse: MangaResponse;
 }
 
@@ -24,6 +25,7 @@ export class NewMangaDialogComponent implements OnInit {
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
+  // declaration des différentes variables
   public mangaRequest: MangaRequest;
   public cfv: CustomFormValid;
   public newEntity: boolean;
@@ -33,12 +35,14 @@ export class NewMangaDialogComponent implements OnInit {
 
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, private router: Router, public dialogRef: MatDialogRef<NewMangaDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: NewMangaBag, public dialogService: MatDialog) {
+
+    // initialisation des differentes variable
+
     this.isDisabled = true;
 
-    if (data.mangaResponse != undefined) {
+    if (data.mangaResponse !== undefined) {
       this.mangaRequest = new MangaRequest(data.mangaResponse);
       this.oldPhoto = data.mangaResponse.photo;
-      console.log(this.mangaRequest)
       this.newEntity = false;
     } else {
       this.mangaRequest = new MangaRequest(undefined);
@@ -46,8 +50,11 @@ export class NewMangaDialogComponent implements OnInit {
       this.newEntity = true;
     }
 
+    // initialisation du form
     this.cfv = new CustomFormValid(fb,
     ['title', 'author', 'photo', 'genre', 'tome', 'description']);
+
+    // initialisation des différentes erreurs
     this.cfv.title.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.author.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.genre.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
@@ -62,6 +69,7 @@ export class NewMangaDialogComponent implements OnInit {
   }
 
   getUser() {
+    // recuperation de l'ID de l'utilisateur
     firebase.auth().onAuthStateChanged(response => {
       if (response) {
         this.userId = response.uid;
@@ -70,7 +78,8 @@ export class NewMangaDialogComponent implements OnInit {
   }
 
   fileUrlEventhandler(photo: string) {
-    if (photo != undefined) {
+    // on recupere la photo est on bind sur la request - on active le bouton de de validation
+    if (photo !== undefined) {
       this.mangaRequest.photo = photo;
       this.isDisabled = false;
     }
@@ -79,31 +88,37 @@ export class NewMangaDialogComponent implements OnInit {
   validate() {
     let isValid = true;
 
-    if (this.mangaRequest.photo == undefined || this.mangaRequest.photo == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.mangaRequest.photo === undefined || this.mangaRequest.photo === '') {
       this.cfv.invalid(this.cfv.photo, ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection.code);
       isValid = false;
     }
 
-    if (this.mangaRequest.title == undefined || this.mangaRequest.title == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.mangaRequest.title === undefined || this.mangaRequest.title === '') {
         this.cfv.invalid(this.cfv.title, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         isValid = false;
     }
 
-    if (this.mangaRequest.author == undefined || this.mangaRequest.author == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.mangaRequest.author === undefined || this.mangaRequest.author === '') {
         this.cfv.invalid(this.cfv.author, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         isValid = false;
     }
 
-    if (this.mangaRequest.genre == undefined || this.mangaRequest.genre == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.mangaRequest.genre === undefined || this.mangaRequest.genre === '') {
       this.cfv.invalid(this.cfv.genre, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
-    if (this.mangaRequest.description == undefined || this.mangaRequest.description == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.mangaRequest.description === undefined || this.mangaRequest.description === '') {
       this.cfv.invalid(this.cfv.description, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
+    // on verifie que le champs est bien un nombre et qu'il est supperieur à 0
     if (isNaN(this.mangaRequest.tome) || this.mangaRequest.tome < 0) {
       this.cfv.invalid(this.cfv.tome, ErrorTypeHelper.GLOBAL_ERROR.invalidNumberNotZero.code);
       isValid = false;
@@ -114,8 +129,9 @@ export class NewMangaDialogComponent implements OnInit {
     }
   }
 
-  saveManga(update: boolean) {
-    let request = update ?  (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateManga(this.mangaRequest)) : this.firestoreService.saveManga(this.mangaRequest, this.userId);
+  saveManga(newEntity: boolean) {
+    // si newEntity est à true c'est une update d'un manga existant sinon on enregistre un nouveau manga
+    let request = newEntity ?  (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateManga(this.mangaRequest)) : this.firestoreService.saveManga(this.mangaRequest, this.userId);
     request.then(
       response => {
         this.oldPhoto = undefined;

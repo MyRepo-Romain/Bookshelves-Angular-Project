@@ -31,7 +31,10 @@ export class SigninComponent implements OnInit {
     this.isNewAccount = false;
     this.loginRequest = new LoginRequest(undefined);
 
+    // initialisation du form
     this.cfv = new CustomFormValid(fb, ['email', 'password', 'newEmail', 'newPassword']);
+
+    // initialisation des différentes erreurs
     this.cfv.newEmail.errors.push(ErrorTypeHelper.GLOBAL_ERROR.invalidEmail);
     this.cfv.newEmail.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.newEmail.errors.push(ErrorTypeHelper.GLOBAL_ERROR.invalidEmail);
@@ -60,37 +63,45 @@ export class SigninComponent implements OnInit {
 
   validate() {
 
-    if (this.isNewAccount == false) {
-      if (this.loginRequest.email == '' || this.loginRequest.email == undefined) {
+    if (this.isNewAccount === false) {
+      // validation des champs du formulaire d'authentification
+
+      // on verifie que le champs n'est pas vide ou undefined
+      if (this.loginRequest.email === '' || this.loginRequest.email === undefined) {
         this.cfv.invalid(this.cfv.email, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         return false;
       }
-  
+      // on verifie que l'email correspond bien au standard d'ecriture
       if (!EmailValidator.validate(this.loginRequest.email)) {
           this.cfv.invalid(this.cfv.email, ErrorTypeHelper.GLOBAL_ERROR.invalidEmail.code);
           return false;
       }
 
-      if (this.loginRequest.password == '' || this.loginRequest.password == undefined) {
+    // on verifie que le champs n'est pas vide ou undefined
+      if (this.loginRequest.password === '' || this.loginRequest.password === undefined) {
         this.cfv.invalid(this.cfv.password, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         return false;
       }
     } else {
-      if (this.newEmail == '' || this.newEmail == undefined) {
+      // validation des champs du formulaire de création de compte
+      if (this.newEmail === '' || this.newEmail === undefined) {
         this.cfv.invalid(this.cfv.newEmail, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         return false;
       }
-  
+
+      // on verifie que l'email correspond bien au standard d'ecriture
       if (!EmailValidator.validate(this.newEmail)) {
         this.cfv.invalid(this.cfv.newEmail, ErrorTypeHelper.GLOBAL_ERROR.invalidEmail.code);
         return false;
       }
 
-      if (this.newPassword == '' || this.newPassword == undefined) {
+      // on verifie que le champs n'est pas vide ou undefined
+      if (this.newPassword === '' || this.newPassword === undefined) {
         this.cfv.invalid(this.cfv.newPassword, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         return false;
       }
 
+      // on verifie que le mot de passe correspond bien à la regex etablie dans les variables d'environnements
       if (!environment.passwordRegex.test(this.newPassword)) {
         this.cfv.invalid(this.cfv.newPassword, ErrorTypeHelper.GLOBAL_ERROR.toWeakPassword.code);
         return false;
@@ -104,10 +115,11 @@ export class SigninComponent implements OnInit {
   }
 
   login(isNewAccount: boolean) {
+    // si isNewAccount est à true on valide l'authentification sinon on enregistre un nouvel utilisateur
     let request = isNewAccount ? this.firestoreService.signInUser(this.loginRequest) : this.firestoreService.createNewUser(this.loginRequest);
     request.then(
       response => {
-        if (response.user.emailVerified == false) {
+        if (response.user.emailVerified === false) {
           this.firestoreService.verifyEmail().then(() => {
             this.dialog.open(SendEmailtDialogComponent, {data: {
               userEmail: this.loginRequest.email,
@@ -117,8 +129,8 @@ export class SigninComponent implements OnInit {
             });
           });
           this.isNewAccount = false;
-        } else if (response.user.emailVerified == true) {
-          
+        } else if (response.user.emailVerified === true) {
+
           this.session.setLogin();
           this.router.navigate(['home']);
         }

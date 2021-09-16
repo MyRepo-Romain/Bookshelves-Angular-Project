@@ -5,8 +5,8 @@
                 <mat-card-title class="text-center">Votre profil</mat-card-title>
                 <mat-card-content fxLayout="column" class="d-flex flex-row justify-content-around">
                     <div>
-                        <img *ngIf="user.photoURL == null" src="../../../assets/img/default-img.png" alt="">
-                        <img *ngIf="user.photoURL != null" src="{{ user.photoURL }}" alt="">
+                        <img *ngIf="user.photoURL === null" src="../../../assets/img/default-img.png" alt="">
+                        <img *ngIf="user.photoURL !== null" src="{{ user.photoURL }}" alt="">
                     </div>
                     <div class="d-flex flex-column">
                         <mat-form-field>

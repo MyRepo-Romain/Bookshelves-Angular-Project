@@ -1,5 +1,7 @@
 export class ErrorTypeHelper {
 
+    // création de toutes les erreurs utiliser dans l'application
+
     static GLOBAL_ERROR = class {
         public static missingField: any = { code: 'missing_field', msg: 'Ce champ ne peut pas être vide' };
         public static invalidEmail: any = { code: 'invalid_email', msg: `L'email est invalide` };

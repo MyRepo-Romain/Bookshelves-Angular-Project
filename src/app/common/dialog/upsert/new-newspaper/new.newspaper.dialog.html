@@ -24,7 +24,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 text-center">
-                        <date-picker [cfv]="cfv" [dateSelected]="newspaperRequest.date" (dateSelectedEvent)="dateSelectedEventHandler($event)" [full-width]="true"></date-picker>
+                        <app-date-picker [cfv]="cfv" [dateSelected]="newspaperRequest.date" (dateSelectedEvent)="dateSelectedEventHandler($event)" [full-width]="true"></app-date-picker>
                     </div>
                 </div>
                 <app-file-downloader class="text-center" [cfv]="cfv" (fileUrlEvent)="fileUrlEventhandler($event)"></app-file-downloader>

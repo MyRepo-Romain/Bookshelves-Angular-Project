@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs/Observable';
 import { AngularSession } from 'app/angular.session';
@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSidenav)
   public sidenav: MatSidenav;
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
   public isLoggedIn: Observable<boolean>;
 
   constructor(private session: AngularSession, public observer: BreakpointObserver) {
-    this.sidenavStatus = new BehaviorSubject<string>(undefined)
+    this.sidenavStatus = new BehaviorSubject<string>(undefined);
     this.opened = false;
   }
 
@@ -32,26 +32,26 @@ export class AppComponent implements OnInit{
   }
 
   ngAfterViewInit() {
-    this.isLoggedIn.subscribe( res => {
-      if (res) {
+    this.isLoggedIn.subscribe( response => {
+      if (response) {
         setTimeout(() => {
-          this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
-            if (res.matches) {
+          this.observer.observe(['(max-width: 800px)']).subscribe( result => {
+            if (result.matches) {
               this.sidenav.mode = "over";
-              this.sidenavStatus.next(this.sidenav.mode)
+              this.sidenavStatus.next(this.sidenav.mode);
               this.sidenav.close();
             } else {
               this.sidenav.mode = "side";
-              this.sidenavStatus.next(this.sidenav.mode)
+              this.sidenavStatus.next(this.sidenav.mode);
               this.sidenav.open();
             }
-          })
-        }, 0)
+          });
+        }, 0);
       }
-    })
+    });
   }
 
   toggle() {
-    this.opened = !this.opened
+    this.opened = !this.opened;
   }
 }

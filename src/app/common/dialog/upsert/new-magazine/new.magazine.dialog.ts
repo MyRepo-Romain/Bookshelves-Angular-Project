@@ -11,6 +11,7 @@ import { MagazineResponse } from 'app/models/response/magazineResponce';
 import { MagazineRequest } from 'app/models/request/magazineRequest';
 
 interface NewMagazineBag {
+  // recuperation de l'objet magazineResponse envoyer par l'element parent
   magazineResponse: MagazineResponse;
 }
 
@@ -24,6 +25,7 @@ export class NewMagazineDialogComponent implements OnInit {
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
+  // declaration des différentes variables
   public magazineRequest: MagazineRequest;
   public cfv: CustomFormValid;
   public newEntity: boolean;
@@ -33,9 +35,12 @@ export class NewMagazineDialogComponent implements OnInit {
 
   constructor(public firestoreService: FirestoreService, public fb: FormBuilder, private router: Router, public dialogRef: MatDialogRef<NewMagazineDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: NewMagazineBag, public dialogService: MatDialog) {
+
+    // initialisation des differentes variable
+
     this.isDisabled = true;
 
-    if (data.magazineResponse != undefined) {
+    if (data.magazineResponse !== undefined) {
       this.magazineRequest = new MagazineRequest(data.magazineResponse);
       this.oldPhoto = data.magazineResponse.photo;
       this.newEntity = false;
@@ -45,8 +50,10 @@ export class NewMagazineDialogComponent implements OnInit {
       this.newEntity = true;
     }
 
+    // initialisation du form
     this.cfv = new CustomFormValid(fb,
     ['title', 'photo', 'theme', 'page', 'description']);
+    // initialisation des différentes erreurs
     this.cfv.title.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.page.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
     this.cfv.theme.errors.push(ErrorTypeHelper.GLOBAL_ERROR.missingField);
@@ -60,6 +67,7 @@ export class NewMagazineDialogComponent implements OnInit {
   }
 
   getUser() {
+    // recuperation de l'ID de l'utilisateur
     firebase.auth().onAuthStateChanged(response => {
       if (response) {
         this.userId = response.uid;
@@ -68,7 +76,8 @@ export class NewMagazineDialogComponent implements OnInit {
   }
 
   fileUrlEventhandler(photo: string) {
-    if (photo != undefined) {
+    // on recupere la photo est on bind sur la request - on active le bouton de de validation
+    if (photo !== undefined) {
       this.magazineRequest.photo = photo;
       this.isDisabled = false;
     }
@@ -77,26 +86,31 @@ export class NewMagazineDialogComponent implements OnInit {
   validate() {
     let isValid = true;
 
-    if (this.magazineRequest.photo == undefined || this.magazineRequest.photo == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.magazineRequest.photo === undefined || this.magazineRequest.photo === '') {
       this.cfv.invalid(this.cfv.photo, ErrorTypeHelper.GLOBAL_ERROR.missingFileSelection.code);
       isValid = false;
     }
 
-    if (this.magazineRequest.title == undefined || this.magazineRequest.title == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.magazineRequest.title === undefined || this.magazineRequest.title === '') {
         this.cfv.invalid(this.cfv.title, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
         isValid = false;
     }
 
-    if (this.magazineRequest.theme == undefined || this.magazineRequest.theme == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.magazineRequest.theme === undefined || this.magazineRequest.theme === '') {
       this.cfv.invalid(this.cfv.genre, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
-    if (this.magazineRequest.description == undefined || this.magazineRequest.description == '') {
+    // on verifie que le champs n'est pas vide ou undefined
+    if (this.magazineRequest.description === undefined || this.magazineRequest.description === '') {
       this.cfv.invalid(this.cfv.description, ErrorTypeHelper.GLOBAL_ERROR.missingField.code);
       isValid = false;
     }
 
+    // on verifie que le champs est bien un nombre et qu'il est supperieur à 0
     if (isNaN(this.magazineRequest.page) || this.magazineRequest.page < 0) {
       this.cfv.invalid(this.cfv.page, ErrorTypeHelper.GLOBAL_ERROR.invalidNumberNotZero.code);
       isValid = false;
@@ -107,8 +121,9 @@ export class NewMagazineDialogComponent implements OnInit {
     }
   }
 
-  saveMagazine(update: boolean) {
-    let request = update ?  (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateMagazine(this.magazineRequest)) : this.firestoreService.saveMagazine(this.magazineRequest, this.userId);
+  saveMagazine(newEntity: boolean) {
+    // si newEntity est à true c'est une update d'un magazine existant sinon on enregistre un nouveau magazine
+    let request = newEntity ?  (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateMagazine(this.magazineRequest)) : this.firestoreService.saveMagazine(this.magazineRequest, this.userId);
     request.then(
       response => {
         this.oldPhoto = undefined;

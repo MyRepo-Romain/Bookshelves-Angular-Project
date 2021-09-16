@@ -1,4 +1,4 @@
-<div *ngIf="forgotPassword == false">
+<div *ngIf="forgotPassword === false">
     <h3>Vérifier votre boite mail.</h3>
     <p>Un mail viens d'etre envoyé à l'adresse email : <br><b>{{ userEmail }}.</b></p>
     <p>Pour activer votre espace, cliquez sur le lien qui se trouve dans cet email.</p>
@@ -8,7 +8,7 @@
     </mat-dialog-actions>
 </div>
 
-<div *ngIf="forgotPassword == true">
+<div *ngIf="forgotPassword === true">
     <h3>Vous avez oublié votre mot de passe ?</h3>
     <p>Pour réinitialiser votre mot de passe, veuillez saisir votre email de connexion</p>
     <div class="d-flex justify-content-around">

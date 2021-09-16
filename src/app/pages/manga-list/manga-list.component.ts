@@ -22,6 +22,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class MangaListComponent implements OnInit {
 
+  // initialisation des colonnes de la table
   public displayedColumns: string[] = [
     'genre', 'title', 'author'
   ];
@@ -40,8 +41,9 @@ export class MangaListComponent implements OnInit {
   }
 
   initialiazeDataSource() {
+    // initialisation des data en fonction du l'id de l'utilisateur
     this.firestoreService.getAllMangas().subscribe((querySnapshot) => {
-      this.mangaCollection = querySnapshot.docs.map(dx => new MangaResponse(dx)).filter(x => x.userId == this.userId);
+      this.mangaCollection = querySnapshot.docs.map(dx => new MangaResponse(dx)).filter(x => x.userId === this.userId);
       this.dataSource.data = this.mangaCollection;
     });
   }

@@ -1,7 +1,7 @@
 <div class="container-fluid background-signin">
     <form class="justify-content-center login-card">
         <mat-card class="mat-elevation-z4">
-            <div class="signin-content" *ngIf="isNewAccount == false">
+            <div class="signin-content" *ngIf="isNewAccount === false">
                 <mat-card-title>Authentification</mat-card-title>
                 <mat-card-content fxLayout="column">
                     <mat-form-field>
@@ -23,7 +23,7 @@
                     <a mat-flat-button color="primary" class="connect" (click)="isNewAccountFunction()">Pas de compte ?</a> 
                 </mat-card-actions>
             </div>
-            <div class="signin-content" *ngIf="isNewAccount == true">
+            <div class="signin-content" *ngIf="isNewAccount === true">
                 <mat-card-title>Créer un compte</mat-card-title>
                 <mat-card-content fxLayout="column">
                     <mat-form-field>
