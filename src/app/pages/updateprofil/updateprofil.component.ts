@@ -213,7 +213,7 @@ export class UpdateProfilComponent implements OnInit {
 
   updateUser() {
     // suppression de l'ancienne photo
-    if (this.oldPhoto !== undefined && this.oldPhoto !== "") {
+    if (this.oldPhoto !== undefined && this.oldPhoto !== null && this.oldPhoto !== "") {
       this.firestoreService.deleteFile(this.oldPhoto);
     }
     // update du profil
