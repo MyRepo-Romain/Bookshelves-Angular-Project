@@ -177,6 +177,7 @@
   }
 
   .color {
+    color: $white;
 
     ::ng-deep.mat-form-field-underline, ::ng-deep.mat-form-field-ripple {
       /*change color of underline*/
