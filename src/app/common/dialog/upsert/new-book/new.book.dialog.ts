@@ -78,7 +78,9 @@ export class NewBookDialogComponent implements OnInit {
   fileUrlEventhandler(photo: string) {
     // on recupere la photo est on bind sur la request - on active le bouton de de validation
     if (photo !== undefined) {
-      this.oldPhoto = this.data.bookResponse.photo;
+      if (this.data.bookResponse !== undefined) {
+        this.oldPhoto = this.data.bookResponse.photo;
+      }
       this.bookRequest.photo = photo;
       this.isDisabled = false;
     }
@@ -129,8 +131,12 @@ export class NewBookDialogComponent implements OnInit {
   }
 
   saveBook(newEntity: boolean) {
+    // on supprime l'ancienne photo si elle est remplacer
+    if (this.oldPhoto != undefined) {
+      this.firestoreService.deleteFile(this.oldPhoto);
+    }
     // si newEntity est à true c'est une update d'un livre existant sinon on enregistre un nouveau livre
-    let request = newEntity ? (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateBook(this.bookRequest)) : this.firestoreService.saveBook(this.bookRequest, this.userId);
+    let request = newEntity ? this.firestoreService.updateBook(this.bookRequest) : this.firestoreService.saveBook(this.bookRequest, this.userId);
     request.then(
       response => {
         this.oldPhoto = undefined;

@@ -79,7 +79,9 @@ export class NewMangaDialogComponent implements OnInit {
   fileUrlEventhandler(photo: string) {
     // on recupere la photo est on bind sur la request - on active le bouton de de validation
     if (photo !== undefined) {
-      this.oldPhoto = this.data.mangaResponse.photo;
+      if (this.data.mangaResponse !== undefined) {
+        this.oldPhoto = this.data.mangaResponse.photo;
+      }
       this.mangaRequest.photo = photo;
       this.isDisabled = false;
     }
@@ -130,6 +132,10 @@ export class NewMangaDialogComponent implements OnInit {
   }
 
   saveManga(newEntity: boolean) {
+    // on supprime l'ancienne photo si elle est remplacer
+    if (this.oldPhoto != undefined) {
+      this.firestoreService.deleteFile(this.oldPhoto);
+    }
     // si newEntity est à true c'est une update d'un manga existant sinon on enregistre un nouveau manga
     let request = newEntity ?  (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateManga(this.mangaRequest)) : this.firestoreService.saveManga(this.mangaRequest, this.userId);
     request.then(

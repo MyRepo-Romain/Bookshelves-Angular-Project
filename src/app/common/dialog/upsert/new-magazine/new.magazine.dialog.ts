@@ -77,7 +77,9 @@ export class NewMagazineDialogComponent implements OnInit {
   fileUrlEventhandler(photo: string) {
     // on recupere la photo est on bind sur la request - on active le bouton de de validation
     if (photo !== undefined) {
-      this.oldPhoto = this.data.magazineResponse.photo;
+      if (this.data.magazineResponse !== undefined) {
+        this.oldPhoto = this.data.magazineResponse.photo;
+      }
       this.magazineRequest.photo = photo;
       this.isDisabled = false;
     }
@@ -122,6 +124,10 @@ export class NewMagazineDialogComponent implements OnInit {
   }
 
   saveMagazine(newEntity: boolean) {
+    // on supprime l'ancienne photo si elle est remplacer
+    if (this.oldPhoto != undefined) {
+      this.firestoreService.deleteFile(this.oldPhoto);
+    }
     // si newEntity est à true c'est une update d'un magazine existant sinon on enregistre un nouveau magazine
     let request = newEntity ?  (this.firestoreService.deleteFile(this.oldPhoto), this.firestoreService.updateMagazine(this.magazineRequest)) : this.firestoreService.saveMagazine(this.magazineRequest, this.userId);
     request.then(
