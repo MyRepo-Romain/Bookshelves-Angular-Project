@@ -39,14 +39,13 @@ export class NewMangaDialogComponent implements OnInit {
     // initialisation des differentes variable
 
     this.isDisabled = true;
+    this.oldPhoto = undefined;
 
     if (data.mangaResponse !== undefined) {
       this.mangaRequest = new MangaRequest(data.mangaResponse);
-      this.oldPhoto = data.mangaResponse.photo;
       this.newEntity = false;
     } else {
       this.mangaRequest = new MangaRequest(undefined);
-      this.oldPhoto = undefined;
       this.newEntity = true;
     }
 
@@ -80,6 +79,7 @@ export class NewMangaDialogComponent implements OnInit {
   fileUrlEventhandler(photo: string) {
     // on recupere la photo est on bind sur la request - on active le bouton de de validation
     if (photo !== undefined) {
+      this.oldPhoto = this.data.mangaResponse.photo;
       this.mangaRequest.photo = photo;
       this.isDisabled = false;
     }

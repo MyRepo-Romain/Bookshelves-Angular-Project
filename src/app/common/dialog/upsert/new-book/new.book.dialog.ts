@@ -39,14 +39,13 @@ export class NewBookDialogComponent implements OnInit {
     // initialisation des differentes variable
 
     this.isDisabled = true;
+    this.oldPhoto = undefined;
 
     if (data.bookResponse !== undefined) {
       this.bookRequest = new BookRequest(data.bookResponse);
-      this.oldPhoto = data.bookResponse.photo;
       this.newEntity = false;
     } else {
       this.bookRequest = new BookRequest(undefined);
-      this.oldPhoto = undefined;
       this.newEntity = true;
     }
 
@@ -79,6 +78,7 @@ export class NewBookDialogComponent implements OnInit {
   fileUrlEventhandler(photo: string) {
     // on recupere la photo est on bind sur la request - on active le bouton de de validation
     if (photo !== undefined) {
+      this.oldPhoto = this.data.bookResponse.photo;
       this.bookRequest.photo = photo;
       this.isDisabled = false;
     }

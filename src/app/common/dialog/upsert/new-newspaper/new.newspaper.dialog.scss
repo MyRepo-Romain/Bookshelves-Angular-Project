@@ -1,3 +1,9 @@
-.connect {
-    text-decoration: none;
-  }
+.allowed {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.not-allowed {
+  text-decoration: none;
+  cursor: not-allowed;
+}

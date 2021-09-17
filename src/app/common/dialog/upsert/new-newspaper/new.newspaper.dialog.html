@@ -31,6 +31,6 @@
             </mat-card-content>
     </mat-card>
     <mat-dialog-actions>
-        <a mat-flat-button color="primary" [ngClass]="{'connect': !isDisabled}" [disabled]="isDisabled" (click)="validate()">Enregistrer</a>
+        <a mat-flat-button color="primary" [ngClass]="isDisabled ? 'not-allowed' : 'allowed'" [disabled]="isDisabled" (click)="validate()">Enregistrer</a>
     </mat-dialog-actions>
 </form>

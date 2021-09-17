@@ -39,14 +39,13 @@ export class NewMagazineDialogComponent implements OnInit {
     // initialisation des differentes variable
 
     this.isDisabled = true;
+    this.oldPhoto = undefined;
 
     if (data.magazineResponse !== undefined) {
       this.magazineRequest = new MagazineRequest(data.magazineResponse);
-      this.oldPhoto = data.magazineResponse.photo;
       this.newEntity = false;
     } else {
       this.magazineRequest = new MagazineRequest(undefined);
-      this.oldPhoto = undefined;
       this.newEntity = true;
     }
 
@@ -78,6 +77,7 @@ export class NewMagazineDialogComponent implements OnInit {
   fileUrlEventhandler(photo: string) {
     // on recupere la photo est on bind sur la request - on active le bouton de de validation
     if (photo !== undefined) {
+      this.oldPhoto = this.data.magazineResponse.photo;
       this.magazineRequest.photo = photo;
       this.isDisabled = false;
     }
